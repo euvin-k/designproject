@@ -1,0 +1,5 @@
+flask~=2.2.3
+flask-sqlalchemy
+psycopg2
+flask_login
+Werkzeug~=2.2.3
