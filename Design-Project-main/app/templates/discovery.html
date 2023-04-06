@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <h1>Discover Fellow Learners!</h1>
+
+    <table>
+
+        {% for key in random_user_details.keys() %}
+
+            <tr>
+                <td>{{ key + ": " }}</td>
+                <td>{{ random_user_details[key] }}</td>
+            </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br>
+    <br>
+
+    <table>
+        <th>Interests</th>
+
+        {% for interest in interest_list %}
+
+            <tr>
+                <td>{{ interest.name }}</td>
+            </tr>
+
+        {% endfor %}
+
+    </table>
+
+{% endblock %}
