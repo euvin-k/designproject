@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+
+
+<form action="/settings" method="POST">
+            <div class="card text-left">
+                <div class="card-body">
+                    <table class="table table-striped table-dark shadow-lg">
+                        {% for key in user_details.keys() %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ user_details[key][1] }}</td>
+                            {% if key not in ['User ID'] %}
+                            <td>
+                                <div class="form-group">
+                                    <input class="form-control" id="update_field" name="update_{{user_details[key][0]}}"
+                                           placeholder="Type to update {{ key }}">
+                                </div>
+                            </td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+                <a href="/view_interests">Interests</a>
+                <br>
+                <button type="submit" class="btn btn-primary btn-sm">Make Changes</button>
+            </div>
+</form>
+
+{% endblock %}
