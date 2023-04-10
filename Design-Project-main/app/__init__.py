@@ -10,7 +10,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'dasdahkdkhjdasdb adbaskjdghadgakljhdbas'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:thgb13@localhost/unadoctrina'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:thgb13@localhost/postgres'
 
     UPLOAD_FOLDER = 'Design-Project-main/app/Files'
 
