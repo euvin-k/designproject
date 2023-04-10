@@ -69,3 +69,6 @@ class Group(db.Model, UserMixin):
 class InGroup(db.Model, UserMixin):
     gid = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+
+
+

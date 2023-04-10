@@ -309,8 +309,6 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
 
-            ## CURRENTLY HAVE TO GIVE ABSOLUTE PATH
-            # file.save(os.path.join(r'C:\Users\Zonayed\Documents\GitHub\designproject\Design-Project-main\app\Files', filename))
             curr_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Files')
             file.save(os.path.join(curr_dir, filename))
     return render_template("upload_file.html", user=current_user)
