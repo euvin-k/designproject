@@ -56,3 +56,16 @@ class User(db.Model, UserMixin):
             'About Me': ['desc', current_user.desc]
         }
         return user_details
+
+
+# -------------------
+
+
+class Group(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150))
+
+
+class InGroup(db.Model, UserMixin):
+    gid = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
+    uid = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)

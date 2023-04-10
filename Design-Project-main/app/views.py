@@ -1,9 +1,13 @@
+import os
+
 from flask import Blueprint, render_template, request, flash, jsonify, url_for, redirect
 from flask_login import login_required, current_user
 from .models import *
-from . import db
+from . import db, ALLOWED_EXTENSIONS
+
 import json
 import random
+from werkzeug.utils import secure_filename
 
 views = Blueprint('views', __name__)
 global random_user
@@ -245,6 +249,7 @@ def reject():
 
     return redirect(url_for('views.discovery'))
 
+
 # @views.route('/view_reqs', methods=['GET','POST'])
 # def view_requests():
 #   to view requests based on updates in match table,
@@ -255,3 +260,54 @@ def reject():
 #   but current_user hasn't requested a match with them
 #   so, if Match.uid1 == random_user, Match.uid2 == current_user
 #   and Match.uid1 != current_user, Match.uid2 != random_user
+
+
+@views.route('/search_group', methods=["GET", "POST"])
+def search_group():
+    if request.method == 'POST':
+        search = request.form.get('search')
+
+        if search.isnumeric():
+            group_id = search
+
+            check_existing_group = db.session.query(Group). \
+                filter(Group.id == group_id).first()
+        else:
+            group_name = search
+            check_existing_group = db.session.query(Group). \
+                filter(Group.name == group_name).first()
+
+        if check_existing_group:
+            flash(f"Request to join the group{group_id} has been made!", category="success")
+            pass
+        else:
+            flash("Group is either private or does not exist!", category="error")
+
+    return redirect(url_for('views.discovery'))
+    # return render_template("search_group.html", group_id=group_id)
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@views.route('/upload_file', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(url_for('views.home'))
+        file = request.files['file']
+        # If the user does not select a file, the browser submits an
+        # empty file without a filename.
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(url_for('views.home'))
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+
+            ## CURRENTLY HAVE TO GIVE ABSOLUTE PATH
+            file.save(os.path.join(r'C:\Users\Zonayed\Documents\GitHub\designproject\Design-Project-main\app\Files', filename))
+    return render_template("upload_file.html", user=current_user)
