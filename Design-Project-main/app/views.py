@@ -312,3 +312,33 @@ def upload_file():
             curr_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Files')
             file.save(os.path.join(curr_dir, filename))
     return render_template("upload_file.html", user=current_user)
+
+
+@views.route('/group_creation', methods=['GET', 'POST'])
+def group_creation():
+    if request.method == 'POST':
+        group_name = request.form.get('group_name')
+
+        # new group added to Group
+        new_group = Group(name=group_name)
+        db.session.add(new_group)
+        db.session.commit()
+
+        # add user and group to InGroup
+        group = Group.query.filter_by(name=group_name).first()
+        new_ingroup = InGroup(gid=group.id, uid=current_user.id)
+        db.session.add(new_group)
+        db.session.commit()
+
+        new_groupadmin = GroupAdmins(gid=group.id, uid=current_user.id)
+        db.session.add(new_groupadmin)
+        db.session.commit()
+
+
+
+        # grab all interests
+        # interest_list = db.session.query(Interest.name).join(Enlist). \
+        #     filter(Enlist.uid == random_row.id, Interest.id == Enlist.iid).all()
+        return redirect(url_for('views.home'))
+
+    return render_template("group_creation.html", user=current_user)
