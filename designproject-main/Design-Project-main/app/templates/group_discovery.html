@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <form action="/search_group" method="POST">
+        <input type="text" placeholder="Search Group.." name="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    <h1>Discover New Groups!</h1>
+
+    <table>
+
+        {% for key in random_group_details.keys() %}
+
+            <tr>
+                <td>{{ key + ": " }}</td>
+                <td>{{ random_group_details[key] }}</td>
+            </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br>
+    <br>
+
+
+    <form action="/join_request" method="POST">
+
+        <input type="submit" value="O">
+
+    </form>
+    <br>
+    <form action="/reject_group" method="POST">
+
+        <input type="submit" value="X">
+
+    </form>
+
+    {% if msg %}
+        <p><strong>{{ msg }}</strong></p>
+    {% endif %}
+
+{% endblock %}
