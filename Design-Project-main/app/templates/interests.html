@@ -1,0 +1,69 @@
+{% extends "base.html" %} {% block title %}Interests{% endblock %} {% block content
+%}
+<br />
+<br />
+<br />
+<br />
+
+<h1 align="center">Current Interests</h1>
+<ul class="list-group list-group-flush" id="interests">
+  {% for interest in my_interests %}
+  <li class="list-group-item">
+    {{ interest[0] }}
+
+    <form action="/delete_interest" method="POST">
+      <button
+        type="submit"
+        name="delete_interest"
+        value="{{ interest[0] }}"
+        class="close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+
+
+<br />
+<br />
+
+<h5 align="center">Add New Interests</h5>
+<form action="/add_interest" method="POST">
+    <div class="col-3">
+        <select
+    id="dropdown"
+    name="dropdown"
+    data-live-search="true"
+    class="form-control"
+    title="Select Interest"
+  >
+    </div>
+
+    {% for interest in other_interests %}
+
+    <option value="{{ interest[0] }}">{{ interest[0] }}</option>
+
+    {% endfor %}
+  </select>
+  <br />
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+<br />
+<br />
+<h5 align="center">Create a New Interest</h5>
+<form action="/create_interest" method="POST">
+        <input
+        type="text"
+        class="form-control"
+        id="new_interest"
+        name="new_interest"
+        placeholder="Enter a new Interest"
+        required
+      />
+<br>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

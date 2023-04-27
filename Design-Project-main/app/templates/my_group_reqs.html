@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block title %}Group Requests{% endblock %} {% block
+content %}
+
+<!-- user=current_user, user_details=user_details, user_interests=user_interests, group=group -->
+
+<h1>Accept or Decline Requests</h1>
+<br />
+<br />
+<h2>Request to join {{ group[0] }}</h2>
+<br />
+<h2>User Info</h2>
+<table>
+  {% for key in user_details.keys() %}
+
+  <tr>
+    <td>{{ key + ": " }}</td>
+    <td>{{ user_details[key] }}</td>
+  </tr>
+
+  {% endfor %}
+</table>
+
+<br />
+<br />
+
+<table>
+  <th>User's Interests</th>
+
+  {% for interest in user_interests %}
+
+  <tr>
+    <td>{{ interest.name }}</td>
+  </tr>
+
+  {% endfor %}
+</table>
+
+<br />
+<br />
+
+<form action="/accept_req" method="POST">
+  <button
+    style="background-color: rgb(37, 171, 55)"
+    type="submit"
+    class="btn btn-primary"
+  >
+    Accept
+  </button>
+</form>
+<br />
+<form action="/decline_req" method="POST">
+  <button
+    style="background-color: rgb(163, 18, 18)"
+    type="submit"
+    class="btn btn-primary"
+  >
+    Decline
+  </button>
+</form>
+
+{% if msg %}
+<p><strong>{{ msg }}</strong></p>
+{% endif %} {% endblock %}

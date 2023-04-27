@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %}Discover Group{% endblock %} {% block
+content %}
+<br />
+<br />
+<br />
+<br />
+
+<form action="/search_group" method="POST">
+  <input type="text" placeholder="Search Group ID.." name="search" />
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+<h1>Discover New Groups!</h1>
+
+<table>
+  {% for key in random_group_details.keys() %}
+
+  <tr>
+    <td>{{ key + ": " }}</td>
+    <td>{{ random_group_details[key] }}</td>
+  </tr>
+
+  {% endfor %}
+</table>
+
+<br />
+<br />
+
+<form action="/join_request" method="POST">
+  <button
+    style="background-color: rgb(37, 171, 55)"
+    type="submit"
+    class="btn btn-primary"
+  >
+    Match
+  </button>
+</form>
+<br />
+<form action="/reject_group" method="POST">
+  <button
+    style="background-color: rgb(163, 18, 18)"
+    type="submit"
+    class="btn btn-primary"
+  >
+    Decline
+  </button>
+</form>
+
+{% if msg %}
+<p><strong>{{ msg }}</strong></p>
+{% endif %} {% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %}Setting{% endblock %} {% block
+content %}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<form action="/settings" method="POST">
+  <div class="col-3">
+    <a class="interestLink" href="/view_interests">Set My Interests</a>
+  </div>
+  <div class="card-body">
+    <table class="table table-striped shadow-lg" style="border: 3px solid">
+      {% for key in user_details.keys() %}
+      <tr>
+        <td class="table-secondary text-dark">{{ key }}:</td>
+        <td class="table-light text-dark">{{ user_details[key][1] }}</td>
+        {% if key not in ['User ID'] %}
+        <td class="table-light text-dark">
+          <div class="form-group">
+            <input
+              class="form-control"
+              id="update_field"
+              name="update_{{user_details[key][0]}}"
+              placeholder="Type to update {{ key }}"
+              required
+            />
+          </div>
+        </td>
+        {% else %}
+        <td class="table-light text-dark"></td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <br />
+  <div class="col-3">
+    <button
+      style="background-color: rgb(50, 118, 39)"
+      type="submit"
+      class="btn btn-primary"
+    >
+      Make Changes
+    </button>
+  </div>
+</form>
+
+{% endblock %}
