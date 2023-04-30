@@ -14,6 +14,8 @@ global random_user
 global random_group
 global random_req
 
+rooms = []
+
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
@@ -194,7 +196,7 @@ def discovery():
                                interest_list=interest_list, msg=msg)
     else:
         msg = "There are no users left to see"
-        return render_template("nulldiscovery.html", user=current_user, msg=msg)
+        return render_template("null.html", user=current_user, msg=msg)
 
 
 @views.route('/group_discovery')
@@ -283,6 +285,8 @@ def match():
         # if random_user already sent match req, flash message for successful matching
         if check_existing_req:
             flash('Match Successful!')
+            ids = [min(current_user.id, random_user.id), max(current_user.id, random_user.id)]
+            rooms.append(int(f"{ids[0]}{ids[1]}"))
         else:
             flash('Sent a match request!')
 

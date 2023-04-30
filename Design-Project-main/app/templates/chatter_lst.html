@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+
+
+<table>
+  {% for match in matches %}
+  <tr>
+    <td><strong><a href="/chat/{{ user.id }}/{{ match['id'] }}">{{ match['Last Name'], match['First Name']}}&nbsp</a></strong></td>
+    {% endfor %}
+  </tr>
+</table>
+
+
+<table>
+  {% for group in groups %}
+  <tr>
+    <td><strong><a href="/chat/groups/{{ group.name }}/{{ group.id }}">{{ group.name }}&nbsp</a></strong></td>
+    {% endfor %}
+  </tr>
+</table>
+{% endblock %}

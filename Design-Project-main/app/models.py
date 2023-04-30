@@ -57,6 +57,22 @@ class User(db.Model, UserMixin):
         }
         return user_details
 
+    def user_variablesjs(self):
+        """
+        :return: List of all user variables which are then used in account_details.html
+        the Keys are what users see on the page, the list[0] is what it's called in this Class
+        and the list[1] is grabbing the data from current_user
+        """
+        user_details = {
+            'User ID': current_user.id,
+            'First Name': current_user.first_name,
+            'Last Name': current_user.last_name,
+            'Email': current_user.email,
+            'Phone Number': current_user.phone_number,
+            'About Me': current_user.desc
+        }
+        return user_details
+
 
 # -------------------
 
@@ -86,3 +102,14 @@ class JoinRequest(db.Model, UserMixin):
 class RejectGroup(db.Model, UserMixin):
     gid = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
     uid = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+
+
+class individuals_file_association(db.Model, UserMixin):
+    uid1 = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    uid2 = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    file_name = db.Column(db.String(150), primary_key=True)
+
+
+class group_file_association(db.Model, UserMixin):
+    gid = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
+    file_name = db.Column(db.String(150), primary_key=True)
