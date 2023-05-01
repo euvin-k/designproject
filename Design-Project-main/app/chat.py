@@ -104,7 +104,7 @@ def allowed_file(filename):
 @chat.route('/chat/<uid1>/<uid2>', methods=['GET', 'POST'])
 @login_required
 def individuals_chat(uid1, uid2):
-    print('called: ', uid1, uid2, current_user.id)
+    # print('called: ', uid1, uid2, current_user.id)
     user = db.session.query(User). \
         filter(User.id == uid1).first()
 
@@ -124,7 +124,7 @@ def individuals_chat(uid1, uid2):
         'room': int(f"{ids[0]}{ids[1]}")
     }
 
-    return render_template("chat.html", user=current_user, user_data=user_data, user2_data=user2_data, data=data,
+    return render_template("chat2.html", user=current_user, user_data=user_data, user2_data=user2_data, data=data,
                            ctype='ind')
 
 
@@ -146,7 +146,7 @@ def group_chat(gname, gid):
         'uname2': group.name,
         'room': group.id
     }
-    return render_template("chat.html", user=current_user, user_data=user_data, data=data, ctype='gro')
+    return render_template("chat2.html", user=current_user, user_data=user_data, data=data, ctype='gro')
 
 
 @chat.route('/library/<uid1>/<uid2>', methods=['GET', 'POST'])

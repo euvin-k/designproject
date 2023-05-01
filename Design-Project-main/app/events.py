@@ -12,23 +12,15 @@ def on_join(data):
     username = data['username']
     room = data['room']
     join_room(room)
-    print('room:' , room)
+    print('room:', room)
     users[username] = request.sid
     emit('joined', {'username': username, 'room': room}, room=room)
-
-
-# @socketio.on("user_join")
-# def handle_user_join(data):
-#     username = data['username']
-#     print(f"User {username} joined!")
-#     users[username] = request.sid
-
 
 @socketio.on("new_message")
 def handle_new_message(data):
     message = data['message']
     room = data['room']
-    print(f"New message: {message}")
+    # print(f"New message: {message}")
     username = None
     for user in users:
         if users[user] == request.sid:
