@@ -3,18 +3,30 @@
 {% block title %}Home{% endblock %}
 
 {% block stylesheet %}
-    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+    <style>
+                    {# content 5#}
+                .grid > div:nth-child(6) {
+                /* background: pink; */
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 12/17;
+                grid-row: 30/35;
+            }
+               .grid > div:nth-child(6) > p {
+                margin-right: 20px;
+                font-size: 1em;
+                font-style: italic;
+                /* font-weight: bold; */
+                line-height: 5px;
+                text-align: right;
+                color: mediumvioletred;
+            }
+
+    </style>
 {% endblock %}
 
 {% block content %}
 
           <div class="content_1">
-{#              <img#}
-{#                  id="logo"#}
-{#                  src="{{url_for('static', filename='logo.png')}}"#}
-{#                  alt="UnaDoctrina"#}
-{#              />#}
-
           </div>
 
           <div class="content_2">
@@ -52,8 +64,6 @@
           </div>
 
 
-          <div class="content_3">
-          </div>
 
           <div class="contact">
             <hr>
@@ -65,5 +75,6 @@
             <p><a href="https://www.gmail.com">Contact Us</a></p>
 
           </div>
+
 
 {% endblock %}

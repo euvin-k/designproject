@@ -10,7 +10,7 @@
                 .grid > div:nth-child(3) {
                 /* background-color: rgb(255, 192, 203, .85); */
                 grid-column: 2/17;
-                grid-row: 9/14;
+                grid-row: 10/14;
 
             }
 
@@ -24,7 +24,7 @@
                 /* background: pink; */
                 /* background-color: rgb(255, 192, 203, .85); */
                 grid-column: 2/17;
-                grid-row: 18/28;
+                grid-row: 20/28;
             }
 
                 {# content 4#}
@@ -43,6 +43,13 @@
                 grid-row: 29;
             }
 
+            .interests-container {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-gap: 10em;
+                margin-left: 9em;
+                margin-top: 2em;
+            }
 
         </style>
 {% endblock %}
@@ -61,7 +68,7 @@
                   {% for key in random_user_details.keys() %}
                   <tr style="line-height: 2; margin-bottom: 20px;">
                     <td><strong>{{ key + ": " }}&nbsp</strong></td>
-                    <td>{{ random_user_details[key] }}</td>
+                    <td style="width:900px; height:4em">{{ random_user_details[key] }}</td>
                     {% endfor %}
                   </tr>
 
@@ -77,29 +84,27 @@
                   </tr>
 
                   {% if interest_list  %}
-                        {% for interest in interest_list %}
-                            <tr style="line-height: 3.5;">
-                                <td>{{ interest.name }}</td>
-                            </tr>
-                        {% endfor %}
+{#                        {% for interest in interest_list %}#}
+{#                            <tr style="line-height: 2">#}
+{#                                <td style="margin-left: 1000px">{{ interest.name }}</td>#}
+{#                            </tr>#}
+{#                        {% endfor %}#}
+                      <tr><td>
+
+                          <div class="interests-container">
+
+                            {% for interest in interest_list %}
+                                <div style=""><strong>{{ interest.name }}</strong></div>
+                            {% endfor %}
+                      </div>
+                      </td>
+
+                      </tr>
                   {% else %}
                     <tr style="line-height: 3.5;">
                         <td>Open to explore new horizons!</td>
                     </tr>
                   {% endif %}
-{#                  <tr style="line-height: 3.5;">#}
-{#                    {% if interest_list  %}#}
-{#                        {% for interest in interest_list %}#}
-{#                        <td>{{ interest.name }}</td>#}
-{#                        {% endfor %}#}
-{#                    {% else %}#}
-{#                        <td>Open to explore new horizons!</td>#}
-{#                        </tr>#}
-{#                        <tr>#}
-{#                        <td>Open to explore new horizons!</td>#}
-{#                        </tr>#}
-{##}
-{#                    {% endif %}#}
 
                 </table>
 

@@ -44,12 +44,17 @@
           <div class="content_2">
                 <form action="/settings" method="POST">
                   <div class="card-body">
-                    <table class="table" style="border: 6px solid">
+                    <table class="table table-striped shadow-lg" style="border: 6px solid">
                       {% for key in user_details.keys() %}
                       <tr>
-                        <td class="table-secondary text-dark">{{ key }}:</td>
-                        <td>{{ user_details[key][1] }}</td>
+
+                        <td class="table-secondary text-dark" >{{ key }}:</td>
+
+
+                        <td style="width: 500px">{{ user_details[key][1] }}</td>
                         {% if key not in ['User ID'] %}
+
+
                         <td>
                           <div class="form-group">
                             <input
@@ -61,9 +66,13 @@
                             />
                           </div>
                         </td>
+
+
                         {% else %}
-                        <td class="table-light text-dark"></td>
+                        <td></td>
                         {% endif %}
+
+
                       </tr>
                       {% endfor %}
                     </table>

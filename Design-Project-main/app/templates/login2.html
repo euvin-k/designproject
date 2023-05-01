@@ -9,22 +9,22 @@
                 {# content 1#}
                 .grid > div:nth-child(3) {
                 /* background-color: rgb(255, 192, 203, .85); */
-                grid-column: 2/17;
-                grid-row: 9/14;
+                grid-column: 8/17;
+                grid-row: 10/14;
 
             }
 
                 .grid > div:nth-child(4) {
                 {#background-color: rgb(255, 192, 203, .85);#}
-                grid-column: 2/17;
-                grid-row: 13/20;
+                grid-column: 6/17;
+                grid-row: 15/30;
             }
 
                 .grid > div:nth-child(5) {
                 /* background: pink; */
-                /* background-color: rgb(255, 192, 203, .85); */
+                /* background-color: rgb(255, 192, 203, .85);
                 grid-column: 2/17;
-                grid-row: 18/28;
+                grid-row: 18/35;
             }
 
                 {# content 4#}
@@ -40,7 +40,7 @@
                 /* background: pink; */
                 /* background-color: rgb(255, 192, 203, .85); */
                 grid-column: 10;
-                grid-row: 29;
+                grid-row: 36;
             }
 
 
@@ -50,14 +50,14 @@
 
 
           <div class="content_1">
-                <h3 align="center">Login</h3>
+                <h3 ><strong>Login</strong></h3>
           </div>
 
           <div class="content_2">
             <form id="signUpForm" method="POST">
 
-                <label for="email">Email Address</label>
-                <input
+                <label for="email"><strong>Email Address</strong></label>
+                <input style="width:400px"
                   type="email"
                   class="form-control"
                   id="email"
@@ -66,9 +66,9 @@
                   required
                 />
 
-
-                <label for="password">Password</label>
-                <input
+                <br>
+                <label for="password"><strong>Password</strong></label>
+                <input style="width:400px"
                   type="password"
                   class="form-control"
                   id="password"
@@ -78,25 +78,14 @@
                 />
 
 
-
+                <br>
+{#                <br>#}
                 <button type="submit" class="btn btn-primary">Login</button>
 
             </form>
           </div>
 
 
-          <div class="content_3" style="margin-left: 300px">
-
-          </div>
-
-
-          <div class="content_4">
-
-          </div>
-
-          <div class="content_5">
-
-          </div>
 
 
 {% endblock %}

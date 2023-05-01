@@ -9,50 +9,24 @@
                 {# content 1#}
                 .grid > div:nth-child(3) {
                 /* background-color: rgb(255, 192, 203, .85); */
-                grid-column: 1/17;
-                grid-row: 12/14;
+                grid-column: 8/17;
+                grid-row: 11/14;
 
             }
 
                 .grid > div:nth-child(4) {
                 {#background-color: rgb(255, 192, 203, .85);#}
-                grid-column: 2/17;
-                grid-row: 15/60;
+                 grid-column: 6/17;
+                grid-row: 14/40;
             }
 
-                .grid > div:nth-child(5) {
-                /* background: pink; */
-                /* background-color: rgb(255, 192, 203, .85); */
-                grid-column: 2/17;
-                grid-row: 18/28;
-            }
-
-                {# content 4#}
-                .grid > div:nth-child(6) {
-                /* background: pink; */
-                /* background-color: rgb(255, 192, 203, .85); */
-                grid-column: 6;
-                grid-row: 29;
-            }
-
-                {# content 5#}
-                .grid > div:nth-child(7) {
-                /* background: pink; */
-                /* background-color: rgb(255, 192, 203, .85); */
-                grid-column: 10;
-                grid-row: 29;
-            }
-
-            .col-3 {
-                margin-left: 100px;
-            }
         </style>
 {% endblock %}
 {% block content %}
 
 
           <div class="content_1">
-            <h3 align="center">Sign Up</h3>
+            <h3><strong>Sign Up</strong></h3>
           </div>
 
           <div class="content_2" >
@@ -60,7 +34,7 @@
                   <br />
                   <div class="col-3">
                     <label for="email"><strong>Email Address</strong></label>
-                    <input
+                    <input style="width:400px"
                       type="email"
                       class="form-control"
                       id="email"
@@ -72,7 +46,7 @@
 
                   <div class="col-3" >
                     <label for="firstName"><strong>First Name</strong></label>
-                    <input
+                    <input style="width:400px"
                       type="text"
                       class="form-control"
                       id="firstName"
@@ -83,7 +57,7 @@
                   </div>
                   <div class="col-3">
                     <label for="lastName"><strong>Last Name</strong></label>
-                    <input
+                    <input style="width:400px"
                       type="text"
                       class="form-control"
                       id="lastName"
@@ -94,7 +68,7 @@
                   </div>
                   <div class="col-3">
                     <label for="phoneNumber"><strong>Phone Number</strong></label>
-                    <input
+                    <input style="width:400px"
                       type="text"
                       class="form-control"
                       id="phoneNumber"
@@ -105,7 +79,7 @@
                   </div>
                   <div class="col-3">
                     <label for="password1"><strong>Password</strong></label>
-                    <input
+                    <input style="width:400px"
                       type="password"
                       class="form-control"
                       id="password1"
@@ -116,7 +90,7 @@
                   </div>
                   <div class="col-3">
                     <label for="password2"><strong>Password (Confirm)</strong></label>
-                    <input
+                    <input style="width:400px"
                       type="password"
                       class="form-control"
                       id="password2"
@@ -126,8 +100,8 @@
                     />
                   </div>
                   <br />
-                  <div class="boxed" style="margin-left: 350px; margin-top: 20px";>
-                    <textarea
+                  <div class="boxed" >
+                    <textarea style="width:600px; margin-left: -5em"
                       name="desc"
                       rows="5"
                       cols="40"
@@ -135,28 +109,14 @@
                     ></textarea>
                   </div>
                   <br />
-                  <div style="margin-left: 520px">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                  <div >
+                    <button type="submit" class="btn btn-primary" style="margin-left: 10em">Submit</button>
                   </div>
                 </form>
 
 
           </div>
 
-
-          <div class="content_3" style="margin-left: 300px">
-
-
-          </div>
-
-
-          <div class="content_4">
-
-          </div>
-
-          <div class="content_5">
-
-          </div>
 
 
 {% endblock %}
