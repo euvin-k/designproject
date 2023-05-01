@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask-SocketIO Example</title>
+    <title>Chat</title>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
     <style>
         body {
@@ -43,6 +43,8 @@
     </style>
 </head>
 <body>
+
+
     <div id="landing">
 {#        <input type="text" id="username" placeholder="Username">#}
         <button id="join-btn">JOIN</button>
@@ -56,15 +58,17 @@
     </div>
 
     <div id="file_management" style="display:none;">
-        <br>
-        <form method=post enctype=multipart/form-data>
-        <input  type="file" name= "file" id="inputGroupFile01">
-        <button type="submit" class="btn btn-primary">Upload</button>
-    </form>
+          {% if ctype=='ind' %}
+              <a href="/library/{{ data['uid1'] }}/{{ data['uid2'] }}"><button>Library</button></a>
+          {% elif ctype=='gro' %}
+              <a href="/library/groups/{{ data['gid'] }}"><button>Library</button></a>
+          {% endif %}
+{#        <a href="library/{{ data['room'] }}.html"><button>Library</button></a>#}
     </div>
 
 
     <script>
+
         const socket = io({autoConnect: false});
         let data = myFunc({{data|tojson}})
 
@@ -72,6 +76,9 @@
         function myFunc(vars) {
             return vars
         }
+
+
+
 
         document.getElementById("join-btn").addEventListener("click", function() {
             let user = myFunc({{user_data|tojson}})
@@ -99,6 +106,7 @@
                 document.getElementById("message").value = "";
             }
         })
+
 
         socket.on('joined', data => {
           console.log(`${data.username} has joined ${data.room}`);

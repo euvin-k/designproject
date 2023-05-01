@@ -64,12 +64,12 @@ class User(db.Model, UserMixin):
         and the list[1] is grabbing the data from current_user
         """
         user_details = {
-            'User ID': current_user.id,
-            'First Name': current_user.first_name,
-            'Last Name': current_user.last_name,
-            'Email': current_user.email,
-            'Phone Number': current_user.phone_number,
-            'About Me': current_user.desc
+            'User ID': self.id,
+            'First Name': self.first_name,
+            'Last Name': self.last_name,
+            'Email': self.email,
+            'Phone Number': self.phone_number,
+            'About Me': self.desc
         }
         return user_details
 
@@ -104,12 +104,12 @@ class RejectGroup(db.Model, UserMixin):
     uid = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
 
 
-class individuals_file_association(db.Model, UserMixin):
+class Individuals_File_Association(db.Model, UserMixin):
     uid1 = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     uid2 = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     file_name = db.Column(db.String(150), primary_key=True)
 
 
-class group_file_association(db.Model, UserMixin):
+class Group_File_Association(db.Model, UserMixin):
     gid = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
     file_name = db.Column(db.String(150), primary_key=True)
