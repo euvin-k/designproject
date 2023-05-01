@@ -1,0 +1,93 @@
+{% extends "base2.html" %}
+
+{% block title %}Library{% endblock %}
+
+
+{% block stylesheet %}
+        <style>
+
+
+                .grid > div:nth-child(3) {
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 9/14;
+
+            }
+
+                .grid > div:nth-child(4) {
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 13/20;
+            }
+
+                .grid > div:nth-child(5) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 28/28;
+            }
+
+
+        </style>
+{% endblock %}
+{% block content %}
+
+          <div class="content_1">
+                <h1>Library</h1>
+          </div>
+
+          <div class="content_2">
+              <ul id="fileList">
+                {% if files==None %}
+                    <li><strong>Empty</strong></li>
+                {% else %}
+                    {% for file in files %}
+                        <li><a href="/download/{{ file['name'] }}">{{ file['name'] }}</a> <button onclick="deleteFile('{{ file['name'] }}')">X</button></li>
+                    {% endfor %}
+                {% endif %}
+              </ul>
+          </div>
+
+
+          <div class="content_3">
+
+            <form action="/upload_file/{{ gid }}" method="POST" enctype="multipart/form-data">
+                <p>Upload a file:</p>
+                <input type="file" name="file">
+                <input type="submit" value="Upload">
+            </form>
+
+          </div>
+
+
+          <div class="content_4">
+          </div>
+
+          <div class="contact">
+            <hr>
+            <p>Euvin Kang</p>
+            <p>Zonayed Rahman</p>
+            <p>Jun Yong Song</p>
+            <p>New York University</p>
+            <p>(929)504-1839</p>
+            <p><a href="https://www.gmail.com">Contact Us</a></p>
+
+          </div>
+
+    <script>
+        function deleteFile(filename) {
+            if (confirm('Are you sure you want to delete ' + filename + '?')) {
+                fetch('/delete_file', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ filename: filename }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function(response) {
+                    location.reload();
+                });
+            }
+        }
+    </script>
+
+{% endblock %}

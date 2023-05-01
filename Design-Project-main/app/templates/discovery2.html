@@ -1,0 +1,136 @@
+{% extends "base2.html" %}
+
+{% block title %}Library{% endblock %}
+
+
+{% block stylesheet %}
+        <style>
+
+                {# content 1#}
+                .grid > div:nth-child(3) {
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 9/14;
+
+            }
+
+                .grid > div:nth-child(4) {
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 13/20;
+            }
+
+                .grid > div:nth-child(5) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 18/28;
+            }
+
+                {# content 4#}
+                .grid > div:nth-child(6) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 6;
+                grid-row: 29;
+            }
+
+                {# content 5#}
+                .grid > div:nth-child(7) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 10;
+                grid-row: 29;
+            }
+
+
+        </style>
+{% endblock %}
+{% block content %}
+
+          {% if msg %}
+            <p><strong>{{ msg }}</strong></p>
+          {% endif %}
+
+          <div class="content_1">
+                <h1>Discover Fellow Learners!</h1>
+          </div>
+
+          <div class="content_2">
+                <table>
+                  {% for key in random_user_details.keys() %}
+                  <tr style="line-height: 2; margin-bottom: 20px;">
+                    <td><strong>{{ key + ": " }}&nbsp</strong></td>
+                    <td>{{ random_user_details[key] }}</td>
+                    {% endfor %}
+                  </tr>
+
+                </table>
+          </div>
+
+
+          <div class="content_3">
+                <table>
+                  <tr>
+                    <th><strong>Interests:&nbsp</strong></th>
+                      <br />
+                  </tr>
+
+                  {% if interest_list  %}
+                        {% for interest in interest_list %}
+                            <tr style="line-height: 3.5;">
+                                <td>{{ interest.name }}</td>
+                            </tr>
+                        {% endfor %}
+                  {% else %}
+                    <tr style="line-height: 3.5;">
+                        <td>Open to explore new horizons!</td>
+                    </tr>
+                  {% endif %}
+{#                  <tr style="line-height: 3.5;">#}
+{#                    {% if interest_list  %}#}
+{#                        {% for interest in interest_list %}#}
+{#                        <td>{{ interest.name }}</td>#}
+{#                        {% endfor %}#}
+{#                    {% else %}#}
+{#                        <td>Open to explore new horizons!</td>#}
+{#                        </tr>#}
+{#                        <tr>#}
+{#                        <td>Open to explore new horizons!</td>#}
+{#                        </tr>#}
+{##}
+{#                    {% endif %}#}
+
+                </table>
+
+          </div>
+
+
+          <div class="content_4">
+          <form action="/match" method="POST">
+              <button
+                style="background-color: rgb(37, 171, 55)"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Match
+              </button>
+            </form>
+            <br />
+          </div>
+
+          <div class="content_5">
+                <form action="/reject" method="POST">
+              <button
+                style="background-color: rgb(163, 18, 18)"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Decline
+              </button>
+            </form>
+
+          </div>
+
+
+{% endblock %}

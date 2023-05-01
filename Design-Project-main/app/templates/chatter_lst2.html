@@ -1,0 +1,78 @@
+{% extends "base2.html" %}
+
+{% block title %}Chatters{% endblock %}
+
+{% block stylesheet %}
+{#    <link rel="stylesheet" type="text/css" href="../static/styles.css">#}
+    <style>
+
+
+    .grid > div:nth-child(3) {
+	/* background-color: rgb(255, 192, 203, .85); */
+	grid-column: 1/17;
+	grid-row: 9/14;
+
+}
+
+    .grid > div:nth-child(4) {
+	/* background-color: rgb(255, 192, 203, .85); */
+	grid-column: 2/8;
+	grid-row: 11/25;
+}
+
+    .grid > div:nth-child(5) {
+	/* background: pink; */
+	/* background-color: rgb(255, 192, 203, .85); */
+	grid-column: 10/17;
+	grid-row: 12/25;
+}
+
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+          <div class="content_1">
+
+          </div>
+
+          <div class="content_2">
+              <p><strong>Friends</strong></p>
+              <table>
+                  {% for match in matches %}
+                  <tr>
+                    <td><strong><a href="/chat/{{ user.id }}/{{ match['id'] }}">{{ match['Last Name']}}, {{ match['First Name']}}&nbsp</a></strong></td>
+                    {% endfor %}
+                  </tr>
+              </table>
+          </div>
+
+
+          <div class="content_3">
+            <p><strong>Groups</strong></p>
+              <table>
+                  {% for group in groups %}
+                  <tr>
+                    <td><strong><a href="/chat/groups/{{ group.name }}/{{ group.id }}">{{ group.name }}&nbsp</a></strong></td>
+                    {% endfor %}
+                  </tr>
+              </table>
+          </div>
+
+
+          <div class="content_4">
+          </div>
+
+          <div class="contact">
+            <hr>
+            <p>Euvin Kang</p>
+            <p>Zonayed Rahman</p>
+            <p>Jun Yong Song</p>
+            <p>New York University</p>
+            <p>(929)504-1839</p>
+            <p><a href="https://www.gmail.com">Contact Us</a></p>
+
+          </div>
+
+{% endblock %}

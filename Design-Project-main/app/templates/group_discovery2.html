@@ -1,0 +1,104 @@
+{% extends "base2.html" %}
+
+{% block title %}Library{% endblock %}
+
+
+{% block stylesheet %}
+        <style>
+
+                {# content 1#}
+                .grid > div:nth-child(3) {
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 9/14;
+
+            }
+
+                .grid > div:nth-child(4) {
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 13/20;
+            }
+
+                .grid > div:nth-child(5) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 18/28;
+            }
+
+                {# content 4#}
+                .grid > div:nth-child(6) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 6;
+                grid-row: 29;
+            }
+
+                {# content 5#}
+                .grid > div:nth-child(7) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 10;
+                grid-row: 29;
+            }
+
+
+        </style>
+{% endblock %}
+{% block content %}
+
+
+          <div class="content_1">
+            <form action="/search_group" method="POST">
+              <input type="text" placeholder="Search Group ID.." name="search" />
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+          </div>
+
+          <div class="content_2">
+                <h1>Discover New Groups!</h1>
+          </div>
+
+
+          <div class="content_3">
+                <table>
+                  {% for key in random_group_details.keys() %}
+
+                  <tr>
+                    <td>{{ key + ": " }}</td>
+                    <td>{{ random_group_details[key] }}</td>
+                  </tr>
+
+                  {% endfor %}
+                </table>
+          </div>
+
+
+          <div class="content_4">
+                <form action="/join_request" method="POST">
+                  <button
+                    style="background-color: rgb(37, 171, 55)"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    Match
+                  </button>
+                </form>
+                <br />
+                <form action="/reject_group" method="POST">
+                  <button
+                    style="background-color: rgb(163, 18, 18)"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    Decline
+                  </button>
+                </form>
+          </div>
+
+          <div class="content_5">
+          </div>
+
+
+{% endblock %}

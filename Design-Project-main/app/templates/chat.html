@@ -60,10 +60,12 @@
     <div id="file_management" style="display:none;">
           {% if ctype=='ind' %}
               <a href="/library/{{ data['uid1'] }}/{{ data['uid2'] }}"><button>Library</button></a>
+              <a href="/unmatch/{{ data['uid1'] }}/{{ data['uid2'] }}"><button>Unmatch</button></a>
           {% elif ctype=='gro' %}
               <a href="/library/groups/{{ data['gid'] }}"><button>Library</button></a>
+              <a href="/unmatch/groups/{{ data['uid1'] }}/{{ data['gid'] }}"><button>Leave Group</button></a>
           {% endif %}
-{#        <a href="library/{{ data['room'] }}.html"><button>Library</button></a>#}
+
     </div>
 
 

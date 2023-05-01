@@ -1,0 +1,159 @@
+{% extends "base2.html" %}
+
+{% block title %}Library{% endblock %}
+
+
+{% block stylesheet %}
+        <style>
+
+                {# content 1#}
+                .grid > div:nth-child(3) {
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 9/14;
+
+            }
+
+                .grid > div:nth-child(4) {
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 13/20;
+            }
+
+                .grid > div:nth-child(5) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 18/28;
+            }
+
+                {# content 4#}
+                .grid > div:nth-child(6) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 6;
+                grid-row: 29;
+            }
+
+                {# content 5#}
+                .grid > div:nth-child(7) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 10;
+                grid-row: 29;
+            }
+
+
+        </style>
+{% endblock %}
+{% block content %}
+
+
+          <div class="content_1">
+
+          </div>
+
+          <div class="content_2">
+               <form class="signUpForm" method="POST">
+                  <h3 align="center">Sign Up</h3>
+                  <br />
+                  <div class="col-3">
+                    <label for="email">Email Address</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      placeholder="Enter email"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-3">
+                    <label for="firstName">First Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="firstName"
+                      name="firstName"
+                      placeholder="Enter first name"
+                      required
+                    />
+                  </div>
+                  <div class="col-3">
+                    <label for="lastName">Last Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Enter last name"
+                      required
+                    />
+                  </div>
+                  <div class="col-3">
+                    <label for="phoneNumber">hone Number</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      placeholder="Enter Phone Number"
+                      required
+                    />
+                  </div>
+                  <div class="col-3">
+                    <label for="password1">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="password1"
+                      name="password1"
+                      placeholder="Enter password"
+                      required
+                    />
+                  </div>
+                  <div class="col-3">
+                    <label for="password2">Password (Confirm)</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="password2"
+                      name="password2"
+                      placeholder="Confirm password"
+                      required
+                    />
+                  </div>
+                  <br />
+                  <div class="boxed" style="margin-left: 390px">
+                    <textarea
+                      name="desc"
+                      rows="5"
+                      cols="40"
+                      placeholder="Introduce yourself!"
+                    ></textarea>
+                  </div>
+                  <br />
+                  <div style="margin-left: 520px">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+          </div>
+
+
+          <div class="content_3" style="margin-left: 300px">
+
+
+          </div>
+
+
+          <div class="content_4">
+
+          </div>
+
+          <div class="content_5">
+
+          </div>
+
+
+{% endblock %}

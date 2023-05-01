@@ -21,9 +21,9 @@ rooms = []
 @login_required
 def home():
     if request.method == 'POST':
-        return render_template("home.html", user=current_user)
+        return render_template("home2.html", user=current_user)
 
-    return render_template("home.html", user=current_user)
+    return render_template("home2.html", user=current_user)
 
 
 @views.route('/settings', methods=['GET', 'POST'])
@@ -43,7 +43,7 @@ def settings():
         return redirect(url_for('views.settings'))
 
     user_details = current_user.user_variables()
-    return render_template("settings.html", user=current_user, user_details=user_details)
+    return render_template("settings2.html", user=current_user, user_details=user_details)
 
 
 @views.route('/view_interests')
@@ -60,7 +60,7 @@ def view_interests():
         if interest not in my_interests:
             other_interests.append(interest)
 
-    return render_template('interests.html', user=current_user,
+    return render_template('interests2.html', user=current_user,
                            my_interests=my_interests, other_interests=other_interests)
 
 
@@ -192,11 +192,11 @@ def discovery():
             'About': random_row.desc
         }
 
-        return render_template("discovery.html", user=current_user, random_user_details=random_user_details,
+        return render_template("discovery2.html", user=current_user, random_user_details=random_user_details,
                                interest_list=interest_list, msg=msg)
     else:
         msg = "There are no users left to see"
-        return render_template("null.html", user=current_user, msg=msg)
+        return render_template("null2.html", user=current_user, msg=msg)
 
 
 @views.route('/group_discovery')
@@ -242,10 +242,9 @@ def group_discovery():
                 continue
 
             valid = True
-
         if not rows:
             msg = "There are no groups left to see"
-            return render_template("group_discovery.html", user=current_user, msg=msg, random_group_details={})
+            return render_template("null2.html", user=current_user, msg=msg, random_group_details={})
 
         global random_group
         random_group = random_row
@@ -256,7 +255,7 @@ def group_discovery():
         }
         msg = None
 
-        return render_template("group_discovery.html", user=current_user, msg=msg,
+        return render_template("group_discovery2.html", user=current_user, msg=msg,
                                random_group_details=random_group_details)
 
 
@@ -389,14 +388,14 @@ def view_join_reqs():
             # grab group name
             group = db.session.query(Group.name).filter(Group.id == random_gid).first()
 
-            return render_template('my_group_reqs.html', user=current_user, user_details=user_details,
+            return render_template('my_group_reqs2.html', user=current_user, user_details=user_details,
                                    user_interests=user_interests, group=group, admin_for=admin_for)
         else:
             msg = "You have no join requests at the moment."
-            return render_template('null.html', user=current_user, msg=msg)
+            return render_template('null2.html', user=current_user, msg=msg)
     else:
         msg = "You are not an admin for any servers."
-        return render_template('null.html', user=current_user, msg=msg)
+        return render_template('null2.html', user=current_user, msg=msg)
 
 
 @views.route('/accept_req', methods=["GET", "POST"])
@@ -468,27 +467,6 @@ def allowed_file(filename):
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@views.route('/upload_file', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(url_for('views.home'))
-        file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(url_for('views.home'))
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-
-            curr_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Files')
-            file.save(os.path.join(curr_dir, filename))
-    return render_template("upload_file.html", user=current_user)
-
-
 @views.route('/group_creation', methods=['GET', 'POST'])
 def group_creation():
     if request.method == 'POST':
@@ -513,4 +491,4 @@ def group_creation():
 
         return redirect(url_for('views.home'))
 
-    return render_template("group_creation.html", user=current_user)
+    return render_template("group_creation2.html", user=current_user)

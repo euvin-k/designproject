@@ -1,0 +1,102 @@
+{% extends "base2.html" %}
+
+{% block title %}Library{% endblock %}
+
+
+{% block stylesheet %}
+        <style>
+
+                {# content 1#}
+                .grid > div:nth-child(3) {
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 9/14;
+
+            }
+
+                .grid > div:nth-child(4) {
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 13/20;
+            }
+
+                .grid > div:nth-child(5) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 18/28;
+            }
+
+                {# content 4#}
+                .grid > div:nth-child(6) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 6;
+                grid-row: 29;
+            }
+
+                {# content 5#}
+                .grid > div:nth-child(7) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 10;
+                grid-row: 29;
+            }
+
+
+        </style>
+{% endblock %}
+{% block content %}
+
+
+          <div class="content_1">
+                <h3 align="center">Login</h3>
+          </div>
+
+          <div class="content_2">
+            <form id="signUpForm" method="POST">
+
+                <label for="email">Email Address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="Enter email"
+                  required
+                />
+
+
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  placeholder="Enter password"
+                  required
+                />
+
+
+
+                <button type="submit" class="btn btn-primary">Login</button>
+
+            </form>
+          </div>
+
+
+          <div class="content_3" style="margin-left: 300px">
+
+          </div>
+
+
+          <div class="content_4">
+
+          </div>
+
+          <div class="content_5">
+
+          </div>
+
+
+{% endblock %}

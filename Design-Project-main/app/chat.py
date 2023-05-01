@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, render_template, request, flash, jsonify, url_for, redirect, send_file
+from flask import Blueprint, render_template, request, flash, jsonify, url_for, redirect, send_file, send_from_directory
 from flask_login import login_required, current_user
 from .models import *
 from . import db, ALLOWED_EXTENSIONS
@@ -11,6 +11,10 @@ from werkzeug.utils import secure_filename
 
 chat = Blueprint('chat', __name__)
 
+
+@chat.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path)
 
 @chat.route('/chatter_lst', methods=['GET', 'POST'])
 @login_required
@@ -89,7 +93,7 @@ def chatters():
                 'name': group.name
             })
 
-    return render_template("chatter_lst.html", user=current_user, matches=matches, groups=groups)
+    return render_template("chatter_lst2.html", user=current_user, matches=matches, groups=groups)
 
 
 def allowed_file(filename):
@@ -100,6 +104,7 @@ def allowed_file(filename):
 @chat.route('/chat/<uid1>/<uid2>', methods=['GET', 'POST'])
 @login_required
 def individuals_chat(uid1, uid2):
+    print('called: ', uid1, uid2, current_user.id)
     user = db.session.query(User). \
         filter(User.id == uid1).first()
 
@@ -147,32 +152,6 @@ def group_chat(gname, gid):
 @chat.route('/library/<uid1>/<uid2>', methods=['GET', 'POST'])
 @login_required
 def individuals_chat_library(uid1, uid2):
-    # if request.method == 'POST':
-    #     # check if the post request has the file part
-    #     if 'file' not in request.files:
-    #         flash('No file part')
-    #         return redirect(url_for('views.home'))
-    #     file = request.files['file']
-    #
-    #     if file.filename == '':
-    #         flash('No selected file')
-    #         return redirect(url_for('views.home'))
-    #     if file and allowed_file(file.filename):
-    #         filename = secure_filename(file.filename)
-    #
-    #         curr_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Files')
-    #         file.save(os.path.join(curr_dir, filename))
-    #
-    #         if Individuals_File_Association.query.filter_by(uid1=uid1, uid2=uid2, file_name=filename).first() or \
-    #                 Individuals_File_Association.query.filter_by(uid1=uid2, uid2=uid1, file_name=filename).first():
-    #             print('File with such name already exists!')
-    #             flash('File with such name already exists!', category='error')
-    #         else:
-    #             new_file = Individuals_File_Association(uid1=uid1, uid2=uid2, file_name=filename)
-    #             db.session.add(new_file)
-    #             db.session.commit()
-    #             flash('File added!', category='success')
-
     user = db.session.query(User). \
         filter(User.id == uid1).first()
 
@@ -206,9 +185,9 @@ def individuals_chat_library(uid1, uid2):
                 'url': os.path.join(curr_directory, file.file_name)
             })
 
-        return render_template("library.html", user=current_user, files=file_lst, user1=user_data, user2=user2_data)
+        return render_template("library2.html", user=current_user, files=file_lst, user1=user_data, user2=user2_data)
 
-    return render_template("library.html", user=current_user, files=None, user1=user_data, user2=user2_data)
+    return render_template("library2.html", user=current_user, files=None, user1=user_data, user2=user2_data)
 
 
 @chat.route('/upload_file/<uid1>/<uid2>', methods=['POST'])
@@ -287,9 +266,9 @@ def group_chat_library(gid):
                 'url': os.path.join(curr_directory, file.file_name)
             })
 
-        return render_template("group_library.html", user=current_user, files=file_lst, gid=gid)
+        return render_template("group_library2.html", user=current_user, files=file_lst, gid=gid)
 
-    return render_template("group_library.html", user=current_user, files=None, gid=gid)
+    return render_template("group_library2.html", user=current_user, files=None, gid=gid)
 
 
 @chat.route('/upload_file/<gid>', methods=['POST'])
@@ -335,3 +314,50 @@ def group_delete_file():
         return jsonify({'message': f'{file_name} has been deleted.'}), 200
     else:
         return jsonify({'error': f'{file_name} does not exist.'}), 404
+
+
+@chat.route('/unmatch/<uid1>/<uid2>', methods=['GET'])
+@login_required
+def individuals_unmatch(uid1, uid2):
+    user = db.session.query(User). \
+        filter(User.id == uid1).first()
+
+    user2 = db.session.query(User). \
+        filter(User.id == uid2).first()
+
+    match = db.session.query(Match). \
+        filter(Match.uid1 == uid1, Match.uid2 == uid2).first()
+
+    match_reverse = db.session.query(Match). \
+        filter(Match.uid1 == uid2, Match.uid2 == uid1).first()
+    print('here')
+    db.session.delete(match)
+    db.session.delete(match_reverse)
+    db.session.commit()
+
+    return redirect(url_for('chat.chatters'))
+
+
+@chat.route('/unmatch/groups/<uid1>/<gid>', methods=['POST'])
+@login_required
+def groups_unmatch(uid, gid):
+    user = db.session.query(User). \
+        filter(User.id == uid).first()
+
+    group = db.session.query(Group). \
+        filter(Group.id == gid).first()
+
+    # remove from groupadmin
+    groupadmin = db.session.query(GroupAdmin). \
+        filter(GroupAdmin.gid == gid, GroupAdmin.uid == uid).first()
+
+    if groupadmin:
+        db.session.delete(groupadmin)
+
+    ingroup = db.session.query(InGroup). \
+        filter(InGroup.gid == gid, InGroup.uid == uid).first()
+
+    db.session.delete(ingroup)
+    db.session.commit()
+
+    return redirect(url_for('chat.chatters'))
