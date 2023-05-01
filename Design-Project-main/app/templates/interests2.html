@@ -78,7 +78,33 @@
 
 
           <div class="content_3">
-                <h5>Add a New Interest</h5>
+            <h5 align="center">Add New Interests</h5>
+                <form action="/add_interest" method="POST">
+                    <div class="col-3">
+                        <select
+                    id="dropdown"
+                    name="dropdown"
+                    data-live-search="true"
+                    class="form-control"
+                    title="Select Interest"
+                  ></div>
+
+                    {% for interest in other_interests %}
+
+                    <option value="{{ interest[0] }}">{{ interest[0] }}</option>
+
+                    {% endfor %}
+                  </select>
+                  <br />
+                  <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+
+
+          </div>
+
+
+          <div class="content_4">
+            <h5>Add a New Interest</h5>
                 <form action="/create_interest" method="POST">
                         <input
                         type="text"
@@ -91,12 +117,6 @@
                 <br>
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-
-          </div>
-
-
-          <div class="content_4">
-
           </div>
 
           <div class="content_5">

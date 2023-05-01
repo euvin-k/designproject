@@ -10,7 +10,8 @@
                 .grid > div:nth-child(3) {
                 /* background-color: rgb(255, 192, 203, .85); */
                 grid-column: 2/17;
-                grid-row: 9/14;
+                grid-row: 10;
+                {#margin-top: ;    #}
 
             }
 
@@ -24,23 +25,31 @@
                 /* background: pink; */
                 /* background-color: rgb(255, 192, 203, .85); */
                 grid-column: 2/17;
-                grid-row: 18/28;
+                grid-row: 16/23;
+                text-space: 100px;
             }
 
                 {# content 4#}
                 .grid > div:nth-child(6) {
                 /* background: pink; */
                 /* background-color: rgb(255, 192, 203, .85); */
-                grid-column: 6;
-                grid-row: 29;
+                grid-column: 3/8;
+                grid-row: 25;
             }
 
                 {# content 5#}
                 .grid > div:nth-child(7) {
                 /* background: pink; */
                 /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 6;
+                grid-row: 30;
+            }
+                {# content 6#}
+                .grid > div:nth-child(8) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
                 grid-column: 10;
-                grid-row: 29;
+                grid-row: 30;
             }
 
 
@@ -50,30 +59,65 @@
 
 
           <div class="content_1">
-
+                <h1>Accept or Decline Requests</h1>
           </div>
 
           <div class="content_2">
-            <h1>
-              {% if msg %}
-                <p><strong>{{ msg }}</strong></p>
-              {% endif %}
-            </h1>
+            <h2>Request to join Group: {{ group[0] }}</h2>
           </div>
 
 
-          <div class="content_3" style="margin-left: 300px">
-                <p><strong>Come back soon to meet new and exciting people!</strong></p>
+          <div class="content_3">
+                <h2>User Info</h2>
+                <table>
+                  {% for key in user_details.keys() %}
+
+                  <tr>
+                    <td>{{ key + ": " }}</td>
+                    <td>{{ user_details[key] }}</td>
+                  </tr>
+
+                  {% endfor %}
+                </table>
 
           </div>
 
 
           <div class="content_4">
+                <table>
+                  <th>User's Interests</th>
 
+                  {% for interest in user_interests %}
+
+                  <tr>
+                    <td>{{ interest.name }}</td>
+                  </tr>
+
+                  {% endfor %}
+                </table>
           </div>
 
           <div class="content_5">
-
+                <form action="/accept_req" method="POST">
+                  <button
+                    style="background-color: rgb(37, 171, 55)"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    Accept
+                  </button>
+                </form>
+          </div>
+          <div class="content_6">
+                <form action="/decline_req" method="POST">
+                  <button
+                    style="background-color: rgb(163, 18, 18)"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    Decline
+                  </button>
+                </form>
           </div>
 
 

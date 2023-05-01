@@ -22,6 +22,7 @@ def chatters():
     individual_matches = db.session.query(Match.uid2). \
         filter(Match.uid1 == current_user.id).first()
 
+    matches = []
     # combines the two
     if individual_matches is not None:
 
