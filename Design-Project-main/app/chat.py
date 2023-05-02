@@ -195,8 +195,8 @@ def individuals_chat_library(uid1, uid2):
 def upload_file(uid1, uid2):
     file = request.files['file']
     if file.filename == '':
-        flash('No selected file')
-        return redirect(url_for('views.home'))
+        flash('No selected file', category='error')
+        return redirect(url_for('chat.individuals_chat_library', uid1=uid1, uid2=uid2))
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
 
@@ -212,7 +212,8 @@ def upload_file(uid1, uid2):
             db.session.add(new_file)
             db.session.commit()
             flash('File added!', category='success')
-
+    else:
+        flash('File type not allowed!', category='error')
     return redirect(url_for('chat.individuals_chat_library', uid1=uid1, uid2=uid2))
 
 
@@ -239,7 +240,7 @@ def delete_file():
 
         db.session.delete(file)
         db.session.commit()
-
+        flash('File deleted!', category='success')
         return jsonify({'message': f'{file_name} has been deleted.'}), 200
     else:
         return jsonify({'error': f'{file_name} does not exist.'}), 404
@@ -251,6 +252,9 @@ def delete_file():
 @chat.route('/library/groups/<gid>', methods=['GET', 'POST'])
 @login_required
 def group_chat_library(gid):
+    group = db.session.query(Group). \
+        filter(Group.id == gid).first()
+
     files = db.session.query(Group_File_Association). \
         filter(Group_File_Association.gid == gid).first()
 
@@ -267,17 +271,18 @@ def group_chat_library(gid):
                 'url': os.path.join(curr_directory, file.file_name)
             })
 
-        return render_template("group_library2.html", user=current_user, files=file_lst, gid=gid)
+        print(file_lst)
+        return render_template("group_library2.html", user=current_user, files=file_lst, gid=gid, gname=group.name)
 
-    return render_template("group_library2.html", user=current_user, files=None, gid=gid)
+    return render_template("group_library2.html", user=current_user, files=None, gid=gid, gname=group.name)
 
 
 @chat.route('/upload_file/<gid>', methods=['POST'])
 def group_upload_file(gid):
     file = request.files['file']
     if file.filename == '':
-        flash('No selected file')
-        return redirect(url_for('views.home'))
+        flash('No selected file', category='error')
+        return redirect(url_for('chat.group_chat_library', gid=gid))
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
 
@@ -292,7 +297,8 @@ def group_upload_file(gid):
             db.session.add(new_file)
             db.session.commit()
             flash('File added!', category='success')
-
+    else:
+        flash('File type not allowed!', category='error')
     return redirect(url_for('chat.group_chat_library', gid=gid))
 
 
@@ -302,7 +308,7 @@ def group_delete_file():
     curr_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Files')
     # Replace "/path/to/file.pdf" with the path to your file
     file_path = os.path.join(curr_directory, file_name)
-
+    print('here')
     if os.path.exists(file_path):
         os.remove(file_path)
 
@@ -311,7 +317,7 @@ def group_delete_file():
 
         db.session.delete(file)
         db.session.commit()
-
+        flash('File deleted!', category='success')
         return jsonify({'message': f'{file_name} has been deleted.'}), 200
     else:
         return jsonify({'error': f'{file_name} does not exist.'}), 404
