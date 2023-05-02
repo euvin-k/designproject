@@ -27,6 +27,13 @@
 	grid-row: 12/25;
 }
 
+                {# content 5#}
+                .grid > div:nth-child(7) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 11/17;
+                grid-row: 22/25;
+            }
 
     </style>
 {% endblock %}
@@ -61,9 +68,6 @@
           </div>
 
 
-          <div class="content_4">
-          </div>
-
           <div class="contact">
             <hr>
             <p>Euvin Kang</p>
@@ -74,5 +78,25 @@
             <p><a href="https://www.gmail.com">Contact Us</a></p>
 
           </div>
+
+        <div class="content_5">
+                              {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                    messages %} {% for category, message in messages %}
+                      {% if category == 'error' %}
+                            <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                      {% else %}
+                            <div class="alert alert-success alter-dismissable fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                  {% endif %} {% endfor %} {% endif %} {% endwith %}
+        </div>
 
 {% endblock %}

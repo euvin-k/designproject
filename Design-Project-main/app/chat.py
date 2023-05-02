@@ -435,7 +435,7 @@ def groups_unmatch(uid, gid):
 
             db.session.delete(group)
             db.session.commit()
-
+    flash(f'Left group: {group.name}', category='success')
     return redirect(url_for('chat.chatters'))
 
 
