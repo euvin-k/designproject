@@ -38,7 +38,7 @@
                 {# content 5#}
                 .grid > div:nth-child(7) {
                 /* background: pink; */
-                /* background-color: rgb(255, 192, 203, .85); */
+                 {#background-color: rgb(255, 192, 203, .85);#}
                 grid-column: 10;
                 grid-row: 29;
             }
@@ -63,14 +63,32 @@
 
           <div class="content_3">
                 <table>
-                  {% for key in random_group_details.keys() %}
+
 
                   <tr>
-                    <td>{{ key + ": " }}</td>
-                    <td>{{ random_group_details[key] }}</td>
+                    <td><strong><h5>Group Name:</h5></strong></td>
+                    <td><div style="margin-left: 2em; text-align: center"><strong>{{ random_group_details['Name'] }}</strong></div></td>
                   </tr>
 
-                  {% endfor %}
+
+                  <tr>
+                     <td><strong><div style="margin-top: 2em"><h5>Interests:</h5></div></strong></td>
+                  </tr>
+
+
+                  <tr>
+                      <td></td>
+                          <div class="interests-container">
+
+                            {% for interest in random_group_interests %}
+                                <td>
+                                    <div style="margin-top: 1em; margin-left: 3em; text-align: center"><strong>{{ interest.name }}</strong></div>
+                                </td>
+                            {% endfor %}
+                        </div>
+
+                      </tr>
+
                 </table>
           </div>
 
@@ -86,7 +104,10 @@
                   </button>
                 </form>
                 <br />
-                <form action="/reject_group" method="POST">
+          </div>
+
+          <div class="content_5">
+              <form action="/reject_group" method="POST">
                   <button
                     style="background-color: rgb(163, 18, 18)"
                     type="submit"
@@ -95,9 +116,6 @@
                     Decline
                   </button>
                 </form>
-          </div>
-
-          <div class="content_5">
           </div>
 
 

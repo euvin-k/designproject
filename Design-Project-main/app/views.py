@@ -249,6 +249,8 @@ def group_discovery():
         global random_group
         random_group = random_row
 
+        interest_list = db.session.query(Interest.name).join(Group_Enlist). \
+            filter(Group_Enlist.gid == random_group.id, Interest.id == Group_Enlist.iid).all()
         random_group_details = {
             'Name': random_group.name,
             'Group ID': random_group.id
@@ -256,8 +258,9 @@ def group_discovery():
         msg = None
 
         return render_template("group_discovery2.html", user=current_user, msg=msg,
-                               random_group_details=random_group_details)
-
+                               random_group_details=random_group_details, random_group_interests=interest_list)
+    msg = "There are no groups left to see"
+    return render_template("null2.html", user=current_user, msg=msg, random_group_details={})
 
 @views.route('/match', methods=["GET", "POST"])
 def match():
