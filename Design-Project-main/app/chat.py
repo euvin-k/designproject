@@ -16,6 +16,7 @@ chat = Blueprint('chat', __name__)
 def send_static(path):
     return send_from_directory('static', path)
 
+
 @chat.route('/chatter_lst', methods=['GET', 'POST'])
 @login_required
 def chatters():
@@ -153,6 +154,7 @@ def group_chat(gname, gid):
 @chat.route('/library/<uid1>/<uid2>', methods=['GET', 'POST'])
 @login_required
 def individuals_chat_library(uid1, uid2):
+    print(uid1, uid2)
     user = db.session.query(User). \
         filter(User.id == uid1).first()
 
@@ -162,23 +164,23 @@ def individuals_chat_library(uid1, uid2):
     user_data = user.user_variablesjs()
     user2_data = user2.user_variablesjs()
 
-    files = db.session.query(Individuals_File_Association). \
-        filter(Individuals_File_Association.uid1 == uid1, Individuals_File_Association.uid2 == uid2).first()
+    files = db.session.query(Individuals_File_Association.file_name). \
+        filter(
+        (Individuals_File_Association.uid1 == uid2 and Individuals_File_Association.uid2 == uid1)).all()
 
+    flip_files = db.session.query(Individuals_File_Association.file_name). \
+        filter(
+        (Individuals_File_Association.uid1 == uid1 and Individuals_File_Association.uid2 == uid2)).all()
+
+    print(files, flip_files)
+
+    for file in flip_files:
+        files.append(file)
+
+    print('all: ', files)
+
+    curr_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Files')
     if files:
-        files = db.session.query(Individuals_File_Association). \
-            filter(Individuals_File_Association.uid1 == uid1, Individuals_File_Association.uid2 == uid2).all()
-
-        flip_files = db.session.query(Individuals_File_Association). \
-            filter(Individuals_File_Association.uid1 == uid2, Individuals_File_Association.uid2 == uid1).first()
-
-        if flip_files:
-            flip_files = db.session.query(Individuals_File_Association). \
-                filter(Individuals_File_Association.uid1 == uid2, Individuals_File_Association.uid2 == uid1).all()
-
-            files = files.union(flip_files).all()
-
-        curr_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Files')
         file_lst = []
         for file in files:
             file_lst.append({
@@ -194,6 +196,7 @@ def individuals_chat_library(uid1, uid2):
 @chat.route('/upload_file/<uid1>/<uid2>', methods=['POST'])
 def upload_file(uid1, uid2):
     file = request.files['file']
+    print('UPLOAD: ', file)
     if file.filename == '':
         flash('No selected file', category='error')
         return redirect(url_for('chat.individuals_chat_library', uid1=uid1, uid2=uid2))
@@ -228,6 +231,7 @@ def download_file(file_name):
 @chat.route('/delete_file', methods=['DELETE'])
 def delete_file():
     file_name = request.json['filename']
+    print('DELETE: ', file_name)
     curr_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Files')
     # Replace "/path/to/file.pdf" with the path to your file
     file_path = os.path.join(curr_directory, file_name)
@@ -368,3 +372,83 @@ def groups_unmatch(uid, gid):
     db.session.commit()
 
     return redirect(url_for('chat.chatters'))
+
+
+@chat.route('/settings/groups/<gid>', methods=['GET', 'POST'])
+@login_required
+def group_chat_settings(gid):
+    group = db.session.query(Group). \
+        filter(Group.id == gid).first()
+
+    if request.method == 'POST':
+        new_group_name = request.form.get('update_name')
+        group.name = new_group_name
+        db.session.commit()
+        flash('Group name change successful!', category='success')
+
+    return render_template("group_settings2.html", user=current_user, gid=gid, gname=group.name)
+
+
+@chat.route('/group_delete_file/<gid>', methods=['DELETE'])
+def group_name_change(gid):
+    group = db.session.query(Group). \
+        filter(Group.id == gid).first()
+    new_group_name = request.form.get('update_name')
+    group.name = new_group_name
+    db.session.commit()
+    flash('Group name change successful!', category='success')
+
+    return jsonify({'message': f'Group name has been changed.'}), 200
+
+
+@chat.route('/view_interests/<gid>', methods=['GET', 'POST'])
+@login_required
+def group_interests(gid):
+    group = db.session.query(Group). \
+        filter(Group.id == gid).first()
+
+    interests = db.session.query(Interest.name).join(Group_Enlist). \
+        filter(Group_Enlist.gid == gid, Interest.id == Group_Enlist.iid).all()
+
+    all_interests = db.session.query(Interest.name).all()
+    other_interests = []
+    for interest in all_interests:
+        if interest not in interests:
+            other_interests.append(interest)
+
+    return render_template('group_interests.html', user=current_user,
+                           interests=interests, other_interests=other_interests, gid=gid, gname=group.name)
+
+
+@chat.route('/add_interest/<gid>', methods=['GET', 'POST'])
+def add_group_interest(gid):
+    if request.method == 'POST':
+        interest = request.form.get('dropdown')
+
+        # query for interest id to create new Enlist object
+        iid = db.session.query(Interest.id).filter(Interest.name == interest).first()[0]
+
+        new_group_enlist = Group_Enlist(gid=gid, iid=iid)
+        db.session.add(new_group_enlist)
+        db.session.commit()
+
+        flash('Interest added!', category='success')
+
+    return redirect(url_for('chat.group_interests', gid=gid))
+
+
+@chat.route('/delete_interest/<gid>', methods=['GET', 'POST'])
+def delete_group_interest(gid):
+    if request.method == 'POST':
+        # remove the Enlist object holding the relationship between
+        # current user and the selected Interest
+
+        interest = request.form['delete_interest']
+        iid = db.session.query(Interest.id).filter(Interest.name == interest).first()[0]
+        group_enlist = db.session.query(Group_Enlist).filter(Group_Enlist.iid == iid, Group_Enlist.gid == gid).first()
+        db.session.delete(group_enlist)
+        db.session.commit()
+
+        flash('Removed Interest!', category='success')
+
+    return redirect(url_for('chat.group_interests', gid=gid))

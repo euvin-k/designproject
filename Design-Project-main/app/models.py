@@ -110,6 +110,12 @@ class Individuals_File_Association(db.Model, UserMixin):
     file_name = db.Column(db.String(150), primary_key=True)
 
 
+
 class Group_File_Association(db.Model, UserMixin):
     gid = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
     file_name = db.Column(db.String(150), primary_key=True)
+
+
+class Group_Enlist(db.Model, UserMixin):
+    gid = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
+    iid = db.Column(db.Integer, db.ForeignKey('interest.id'), primary_key=True)

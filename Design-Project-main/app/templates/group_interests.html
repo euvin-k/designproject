@@ -4,11 +4,16 @@
 
 
 {% block stylesheet %}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JavaScript library (required) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <style>
 
                 {# content 1#}
                 .grid > div:nth-child(3) {
-                /* background-color: rgb(255, 192, 203, .85); */
+                {#background-color: rgb(255, 192, 203, .85);#}
                 grid-column: 2/17;
                 grid-row: 9/14;
 
@@ -24,24 +29,18 @@
                 /* background: pink; */
                 {#background-color: rgb(255, 192, 203, .85);#}
                 grid-column: 2/17;
-                grid-row: 23/26;
+                grid-row: 23/28;
             }
 
                 {# content 4#}
                 .grid > div:nth-child(6) {
                 /* background: pink; */
-                    background-color: rgb(255, 192, 203, .85);
-                grid-column: 8/10;
-                grid-row: 29;
+                 background-color: rgb(255, 192, 203, .85);
+                grid-column: 9/17;
+                grid-row: 10;
             }
 
-                {# content 5#}
-                .grid > div:nth-child(7) {
-                /* background: pink; */
-                /* background-color: rgb(255, 192, 203, .85); */
-                grid-column: 10;
-                grid-row: 40;
-            }
+
 
 
         </style>
@@ -50,30 +49,32 @@
 
 
           <div class="content_1">
-            <h1>Current Interests</h1>
+            <h1>Current Interests of Group: {{ gname }}</h1>
           </div>
 
           <div class="content_2">
 
             <ul class="list-group list-group-flush" id="interests">
-              {% if not my_interests %}
+            {% if not interests %}
                 <li>No interests selected.</li>
-              {% endif %}
-              {% for interest in my_interests %}
+            {% endif %}
+              {% for interest in interests %}
               <li class="list-group-item" style="background-color: rgba(219,112,147,0.01)">
-                <div style="text-align: center"><strong>{{ interest[0] }}</strong></div>
+              <div style="text-align: center"><strong>{{ interest[0] }}</strong></div>
 
-                <form action="/delete_interest" method="POST">
-                  <button
-                    type="submit"
-                    name="delete_interest"
-                    value="{{ interest[0] }}"
-                    class="close"
-                  >
-                    <strong>
+                <form action="/delete_interest/{{ gid }}" method="POST">
+                        <button
+                            type="submit"
+                            name="delete_interest"
+                            value="{{ interest[0] }}"
+                            class="close"
+                          >
+                            <strong>
                             <span aria-hidden="true">&times;</span>
-                    </strong>
-                  </button>
+                            </strong>
+                        </button>
+
+{#                    </strong>#}
                 </form>
               </li>
               {% endfor %}
@@ -81,11 +82,9 @@
 
           </div>
 
-
           <div class="content_3">
-            <h5 align="center"><strong>Add New Interests</strong></h5>
-              <br>
-                <form action="/add_interest" method="POST" style="text-align: center">
+            <h5 align="center">Add New Interests</h5>
+                <form action="/add_interest/{{ gid }}" method="POST">
                     <div class="col-3">
                         <select
                     id="dropdown"
@@ -93,7 +92,6 @@
                     data-live-search="true"
                     class="form-control"
                     title="Select Interest"
-                    style="align-content: center"
                   ></div>
 
                     {% for interest in other_interests %}
@@ -109,10 +107,8 @@
 
           </div>
 
-
           <div class="content_4">
-              <br>
-            <h5><strong>Add a New Interest</strong></h5>
+            <h5>Add a New Interest</h5>
                 <form action="/create_interest" method="POST">
                         <input
                         type="text"
@@ -127,8 +123,8 @@
                 </form>
           </div>
 
-          <div class="content_5">
-                              {% with messages = get_flashed_messages(with_categories=true) %} {% if
+           <div class="content_5">
+                  {% with messages = get_flashed_messages(with_categories=true) %} {% if
                     messages %} {% for category, message in messages %}
                       {% if category == 'error' %}
                             <div class="alert alert-danger alter-dismissable fade show" role="alert">
@@ -145,7 +141,7 @@
                                 </button>
                                 </div>
                   {% endif %} {% endfor %} {% endif %} {% endwith %}
-          </div>
+           </div>
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -162,5 +158,6 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+
 
 {% endblock %}
