@@ -1,6 +1,6 @@
 {% extends "base2.html" %}
 
-{% block title %}Library{% endblock %}
+{% block title %}Chat{% endblock %}
 
 {% block stylesheet %}
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
@@ -148,14 +148,34 @@
 
         <div id="file_management" style="display:none;  margin-left: 20em;  margin-top: 2em;">
               {% if ctype=='ind' %}
-                  <a href="/library/{{ data['uid1'] }}/{{ data['uid2'] }}"><button>Library</button></a>
-                  <a href="/unmatch/{{ data['uid1'] }}/{{ data['uid2'] }}"><button>Unmatch</button></a>
+                  <a href="/library/{{ data['uid1'] }}/{{ data['uid2'] }}">
+                      <button style="background-color: rgb(82,78,78); margin:1em;">
+                          <div style="color: orangered">Library</div>
+                      </button>
+                  </a>
+                  <a href="/unmatch/{{ data['uid1'] }}/{{ data['uid2'] }}">
+                      <button style="background-color: rgb(82,78,78); margin:1em;">
+                          <div style="color: orangered">Unmatch</div>
+                      </button>
+                  </a>
               {% elif ctype=='gro' %}
-                  <a href="/library/groups/{{ data['gid'] }}"><button>Library</button></a>
+                  <a href="/library/groups/{{ data['gid'] }}">
+                      <button style="background-color: rgb(82,78,78); margin:1em;">
+                          <div style="color: orangered">Library</div>
+                      </button>
+                  </a>
                   {% if admin %}
-                    <a href="/settings/groups/{{ data['gid'] }}"><button>Settings</button></a>
+                    <a href="/settings/groups/{{ data['gid'] }}">
+                        <button style="background-color: rgb(82,78,78); margin:1em;">
+                            <div style="color: orangered">Settings</div>
+                        </button>
+                    </a>
                   {% endif %}
-                  <a href="/unmatch/groups/{{ data['uid1'] }}/{{ data['gid'] }}"><button>Leave Group</button></a>
+                  <a href="/unmatch/groups/{{ data['uid1'] }}/{{ data['gid'] }}">
+                      <button style="background-color: rgb(82,78,78); margin:1em;">
+                          <div style="color: orangered">Leave Group</div>
+                      </button>
+                  </a>
               {% endif %}
 
         </div>
