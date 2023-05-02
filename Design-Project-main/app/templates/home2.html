@@ -4,12 +4,28 @@
 
 {% block stylesheet %}
     <style>
+                    .grid > div:nth-child(3) {
+                /* background: pink; */
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 1/12;
+                grid-row: 10/15;
+                margin: 20px;
+	            margin-left: 5px;
+            }
+                 .grid > div:nth-child(4) {
+                /* background: pink; */
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 1/12;
+                grid-row: 13/20;
+                margin: 20px;
+	            margin-left: 5px;
+            }
                     {# content 5#}
                 .grid > div:nth-child(6) {
                 /* background: pink; */
                 {#background-color: rgb(255, 192, 203, .85);#}
                 grid-column: 12/17;
-                grid-row: 30/35;
+                grid-row: 25/30;
             }
                .grid > div:nth-child(6) > p {
                 margin-right: 20px;
@@ -20,7 +36,9 @@
                 text-align: right;
                 color: mediumvioletred;
             }
-
+            .card-body {
+                width:15em;
+            }
     </style>
 {% endblock %}
 
@@ -30,20 +48,40 @@
           </div>
 
           <div class="content_2">
-              <br>
-              <br>
-              <p>
+              <div class="card-body">
 
-                  Welcome to UnaDoctrina. A place to find others like you or finding new interests.
+                    <table class="table table-striped shadow-lg" style="border: 5px solid; border-color: rgba(84,28,141,0.02)">
+                      <tr style="height:6em;">
+                        <td><div style="width:35em; font-size: 1em; margin-top: 0.8em">
+                            <strong>Welcome to UnaDoctrina. A place to find others like you or finding new interests.</strong></div></td>
+                      </tr>
+                      <tr style="height:6em;">
+                            <td><a id="discovery" href="/discovery" style="color: #4a5c5d">
+                                <div style="margin-left: 10em; font-size: 1em; margin-top: 2em; text-decoration: underline;"><strong>Find New Friends</strong></div>
+                            </a></td>
+                      </tr>
+                      <tr style="height:6em;">
+                            <td><a id="chatter_lst" href="/chatter_lst" style="color: #4a5c5d">
+                                <div style="margin-left: 20em; font-size: 1em;margin-top: 2em; text-decoration: underline;"><strong>Chat with Friends</strong></div>
+                            </a></td>
+                      </tr>
 
-              </p>
-              <br>
-              <p>
-                  <a id="discovery" href="/discovery">Discover Potential Matches</a>
-              </p>
-              <p>
-                  <a class="nav-item nav-link" id="chatter_lst" href="/chatter_lst">Chat</a>
-              </p>
+                    </table>
+                  </div>
+{#              <br>#}
+{#              <br>#}
+{#              <p>#}
+{##}
+{#                  Welcome to UnaDoctrina. A place to find others like you or finding new interests.#}
+{##}
+{#              </p>#}
+{#              <br>#}
+{#              <p>#}
+{#                  <a id="discovery" href="/discovery">Discover Potential Matches</a>#}
+{#              </p>#}
+{#              <p>#}
+{#                  <a class="nav-item nav-link" id="chatter_lst" href="/chatter_lst">Chat</a>#}
+{#              </p>#}
           </div>
 
 
