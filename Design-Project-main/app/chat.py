@@ -378,60 +378,63 @@ def groups_unmatch(uid, gid):
 
     db.session.delete(ingroup)
     db.session.commit()
-    new_admin = db.session.query(InGroup.uid). \
-        filter(InGroup.gid == gid).first()
 
-    if new_admin:
-        new_admin_id = ''
-        for c in str(new_admin):
-            if c.isdigit():
-                new_admin_id += c
+    if groupadmin:
+        db.session.delete(groupadmin)
+        new_admin = db.session.query(InGroup.uid). \
+            filter(InGroup.gid == gid).first()
 
-        new_admin_id = int(new_admin_id)
+        if new_admin:
+            new_admin_id = ''
+            for c in str(new_admin):
+                if c.isdigit():
+                    new_admin_id += c
 
-        print(new_admin_id)
-        new_groupadmin = GroupAdmin(gid=group.id, uid=new_admin_id)
-        db.session.add(new_groupadmin)
-        db.session.commit()
+            new_admin_id = int(new_admin_id)
 
-    else:
-        group_enlists = db.session.query(Group_Enlist). \
-            filter(Group_Enlist.gid == gid).first()
+            print(new_admin_id)
+            new_groupadmin = GroupAdmin(gid=group.id, uid=new_admin_id)
+            db.session.add(new_groupadmin)
+            db.session.commit()
 
-        while group_enlists:
-            db.session.delete(group_enlists)
+        else:
             group_enlists = db.session.query(Group_Enlist). \
                 filter(Group_Enlist.gid == gid).first()
 
-        print('here')
-        group_files = db.session.query(Group_File_Association). \
-            filter(Group_File_Association.gid == gid).first()
+            while group_enlists:
+                db.session.delete(group_enlists)
+                group_enlists = db.session.query(Group_Enlist). \
+                    filter(Group_Enlist.gid == gid).first()
 
-        while group_files:
-            db.session.delete(group_files)
+            print('here')
             group_files = db.session.query(Group_File_Association). \
                 filter(Group_File_Association.gid == gid).first()
 
-        print('here2')
+            while group_files:
+                db.session.delete(group_files)
+                group_files = db.session.query(Group_File_Association). \
+                    filter(Group_File_Association.gid == gid).first()
 
-        group_join_reqs = db.session.query(JoinRequest). \
-            filter(JoinRequest.gid == gid).first()
+            print('here2')
 
-        while group_join_reqs:
-            db.session.delete(group_join_reqs)
             group_join_reqs = db.session.query(JoinRequest). \
                 filter(JoinRequest.gid == gid).first()
 
-        group_rejected_reqs = db.session.query(RejectGroup). \
-            filter(RejectGroup.gid == gid).first()
+            while group_join_reqs:
+                db.session.delete(group_join_reqs)
+                group_join_reqs = db.session.query(JoinRequest). \
+                    filter(JoinRequest.gid == gid).first()
 
-        while group_rejected_reqs:
-            db.session.delete(group_rejected_reqs)
             group_rejected_reqs = db.session.query(RejectGroup). \
                 filter(RejectGroup.gid == gid).first()
 
-        db.session.delete(group)
-        db.session.commit()
+            while group_rejected_reqs:
+                db.session.delete(group_rejected_reqs)
+                group_rejected_reqs = db.session.query(RejectGroup). \
+                    filter(RejectGroup.gid == gid).first()
+
+            db.session.delete(group)
+            db.session.commit()
 
     return redirect(url_for('chat.chatters'))
 
