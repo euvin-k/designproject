@@ -141,6 +141,14 @@ def group_chat(gname, gid):
 
     user_data = user.user_variablesjs()
 
+    groupadmin = db.session.query(GroupAdmin). \
+        filter(GroupAdmin.gid == gid, GroupAdmin.uid == current_user.id).first()
+
+    admin = False
+
+    if groupadmin:
+        admin = True
+
     data = {
         'uid1': current_user.id,
         'uname': current_user.first_name,
@@ -148,7 +156,7 @@ def group_chat(gname, gid):
         'uname2': group.name,
         'room': group.id
     }
-    return render_template("chat2.html", user=current_user, user_data=user_data, data=data, ctype='gro')
+    return render_template("chat2.html", user=current_user, user_data=user_data, data=data, ctype='gro', admin=admin)
 
 
 @chat.route('/library/<uid1>/<uid2>', methods=['GET', 'POST'])
