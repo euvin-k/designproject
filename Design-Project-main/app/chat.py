@@ -349,7 +349,7 @@ def individuals_unmatch(uid1, uid2):
     return redirect(url_for('chat.chatters'))
 
 
-@chat.route('/unmatch/groups/<uid1>/<gid>', methods=['POST'])
+@chat.route('/unmatch/groups/<uid>/<gid>', methods=['GET','POST'])
 @login_required
 def groups_unmatch(uid, gid):
     user = db.session.query(User). \
