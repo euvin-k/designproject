@@ -17,14 +17,14 @@
                 .grid > div:nth-child(4) {
                 {#background-color: rgb(255, 192, 203, .85);#}
                 grid-column: 2/17;
-                grid-row: 13/20;
+                grid-row: 13/16;
             }
 
                 .grid > div:nth-child(5) {
                 /* background: pink; */
                 /* background-color: rgb(255, 192, 203, .85); */
                 grid-column: 2/17;
-                grid-row: 18/28;
+                grid-row: 16/28;
             }
 
                 {# content 4#}
@@ -60,8 +60,12 @@
 
           <div class="content_3">
                <form method=post enctype=multipart/form-data>
-                  <input type="text" placeholder="Enter Group Name" name="group_name" required>
-                  <button type="submit" class="btn btn-primary">Create Group</button>
+                  <input type="text" placeholder="Enter Group Name" name="group_name" style="margin:1em;margin-left: 2em" required>
+                   <br>
+                   <button type="submit" class="btn btn-primary" style="margin:1em; margin-left: 2em; background-color: rgb(82,78,78)">
+                       <div  style="color: orangered">Create Group</div>
+
+                   </button>
                </form>
 
           </div>

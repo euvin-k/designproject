@@ -386,7 +386,8 @@ def view_join_reqs():
             }
 
             # grab interest list of randomly selected user
-            user_interests = db.session.query(Interest.name).filter(Interest.id == user.id).all()
+            user_interests = db.session.query(Interest.name).join(Enlist). \
+                filter(Enlist.uid == user.id, Interest.id == Enlist.iid).all()
 
             # grab group name
             group = db.session.query(Group.name).filter(Group.id == random_gid).first()
@@ -457,10 +458,10 @@ def search_group():
             db.session.add(join_req)
             db.session.commit()
 
-            flash(f"Request to join the group id {group_id} has been made!", category="success")
+            flash(f"Request to join the group ID: {group_id} has been made!", category="success")
             pass
         else:
-            flash(f"Group with id {group_id} does not exist!", category="error")
+            flash(f"Group with ID: {group_id} does not exist!", category="error")
 
     return redirect(url_for('views.group_discovery'))
 

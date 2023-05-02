@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150), nullable=False)
     first_name = db.Column(db.String(150), nullable=False)
     last_name = db.Column(db.String(150), nullable=False)
-    phone_number = db.Column(db.Integer)
+    phone_number = db.Column(db.String(10), nullable=False)
     desc = db.Column(db.String(500))
 
     def __init__(self, fname, lname, email, password, phone_number, desc):
