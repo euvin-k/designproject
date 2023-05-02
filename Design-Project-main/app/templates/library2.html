@@ -22,7 +22,13 @@
 
                 .grid > div:nth-child(5) {
                 /* background: pink; */
-                /* background-color: rgb(255, 192, 203, .85); */
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 26/28;
+            }
+                .grid > div:nth-child(6) {
+                /* background: pink; */
+                {#background-color: rgb(255, 192, 203, .85);#}
                 grid-column: 2/17;
                 grid-row: 28/28;
             }
@@ -64,11 +70,9 @@
 
           <div class="contact">
             <hr>
-            <p>Euvin Kang</p>
-            <p>Zonayed Rahman</p>
-            <p>Jun Yong Song</p>
-            <p>New York University</p>
-            <p>(929)504-1839</p>
+            <p style="text-decoration: underline;"><strong>Library Owners</strong></p>
+            <p>{{user1['First Name']  }} {{  user1['Last Name'] }}</p>
+            <p>{{user2['First Name']  }} {{  user2['Last Name'] }}</p>
             <p><a href="https://www.gmail.com">Contact Us</a></p>
 
           </div>
