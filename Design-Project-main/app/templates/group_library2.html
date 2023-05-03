@@ -1,0 +1,146 @@
+{% extends "base2.html" %}
+
+{% block title %}Group Library{% endblock %}
+
+
+{% block stylesheet %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JavaScript library (required) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <style>
+
+
+                .grid > div:nth-child(3) {
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 9/14;
+
+            }
+
+                .grid > div:nth-child(4) {
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 13/20;
+            }
+
+                .grid > div:nth-child(5) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 26/28;
+            }
+                .grid > div:nth-child(6) {
+                /* background: pink; */
+                 {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 10/17;
+                grid-row: 29/30;
+            }
+                .grid > div:nth-child(6) > p {
+                    margin-right: 20px;
+                    font-size: 1em;
+                    font-style: italic;
+                    /* font-weight: bold; */
+                    line-height: 5px;
+                    text-align: right;
+                    color: mediumvioletred;
+                }
+                grid > div:nth-child(7) {
+                /* background: pink; */
+                 {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 32/35;
+            }
+
+
+        </style>
+{% endblock %}
+{% block content %}
+
+          <div class="content_1">
+                <h1>Library</h1>
+          </div>
+
+          <div class="content_2">
+              <ul id="fileList">
+                {% if files==None %}
+                    <li><strong>Empty</strong></li>
+                {% else %}
+                    {% for file in files %}
+                        <li><a href="/download/{{ file['name'] }}">{{ file['name'] }}</a> <button onclick="deleteFile('{{ file['name'] }}')">X</button></li>
+                    {% endfor %}
+                {% endif %}
+              </ul>
+          </div>
+
+
+          <div class="content_3">
+
+            <form action="/upload_file/{{ gid }}" method="POST" enctype="multipart/form-data">
+                <p>Upload a file:</p>
+                <input type="file" name="file">
+                <input type="submit" value="Upload">
+            </form>
+
+          </div>
+
+
+          <div class="contact">
+            <hr>
+              <p style="text-decoration: underline; text-align: end"><strong>Group {{ gname.upper() }}'s Shared Library</strong></p>
+          </div>
+
+          <div class="alerts">
+              {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %} {% for category, message in messages %}
+                  {% if category == 'error' %}
+                        <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                  {% else %}
+                        <div class="alert alert-success alter-dismissable fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+              {% endif %} {% endfor %} {% endif %} {% endwith %}
+          </div>
+
+    <script>
+        function deleteFile(filename) {
+            if (confirm('Are you sure you want to delete ' + filename + '?')) {
+                fetch('/group_delete_file', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ filename: filename }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function(response) {
+                    location.reload();
+                });
+            }
+        }
+    </script>
+
+        <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+{% endblock %}

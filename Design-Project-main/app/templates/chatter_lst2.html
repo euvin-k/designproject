@@ -1,0 +1,128 @@
+{% extends "base2.html" %}
+
+{% block title %}Friends{% endblock %}
+
+{% block stylesheet %}
+{#    <link rel="stylesheet" type="text/css" href="../static/styles.css">#}
+    <style>
+
+
+                    .grid > div:nth-child(3) {
+                    grid-column: 1/17;
+                    grid-row: 9/14;
+
+                }
+
+                    .grid > div:nth-child(4) {
+                    grid-column: 2/8;
+                    grid-row: 11/25;
+                }
+
+                    .grid > div:nth-child(5) {
+                    grid-column: 10/17;
+                    grid-row: 12/25;
+                }
+
+                        {# content 4/ contact#}
+                .grid > div:nth-child(6) {
+                grid-column: 12/17;
+                grid-row: 26/30;
+            }
+                .grid > div:nth-child(6) > p {
+                margin-right: 20px;
+                font-size: 1em;
+                font-style: italic;
+                line-height: 5px;
+                text-align: right;
+                opacity: 70%;
+                color: mediumvioletred;
+            }
+
+                {# content 5#}
+                .grid > div:nth-child(7) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 11/17;
+                grid-row: 22/25;
+            }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+          <div class="content_1">
+
+          </div>
+
+          <div class="content_2">
+              <p><strong>Friends</strong></p>
+              <table>
+                  {% for match in matches %}
+                  <tr>
+                    <td><strong>
+                        <a href="/chat/{{ user.id }}/{{ match['id'] }}">
+
+                        <div style="margin-left: 2em;
+                                    margin-top: 1em;">
+
+                            {{ match['Last Name']}}, {{ match['First Name']}}&nbsp</div>
+
+                        </a></strong></td>
+                    {% endfor %}
+                  </tr>
+              </table>
+
+          </div>
+
+
+          <div class="content_3">
+            <p><strong>Groups</strong></p>
+              <table>
+                  {% for group in groups %}
+                  <tr>
+                    <td><strong><a href="/chat/groups/{{ group.name }}/{{ group.id }}">
+                        <div style="margin-left: 2em;
+                                    margin-top: 1em;">
+
+                            {{ group.name }}&nbsp</div>
+                        </a></strong></td>
+
+                  </tr>
+                  {% endfor %}
+              </table>
+          </div>
+
+
+          <div class="contact">
+            <hr>
+            <p>Euvin Kang</p>
+            <p>Zonayed Rahman</p>
+            <p>Jun Yong Song</p>
+            <p>New York University</p>
+            <p>(929)504-1839</p>
+            <p><a href="https://www.gmail.com">Contact Us</a></p>
+
+          </div>
+
+        <div class="content_5">
+                              {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                    messages %} {% for category, message in messages %}
+                      {% if category == 'error' %}
+                            <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                      {% else %}
+                            <div class="alert alert-success alter-dismissable fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                  {% endif %} {% endfor %} {% endif %} {% endwith %}
+        </div>
+
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends "base2.html" %}
+
+{% block title %}Shared Library{% endblock %}
+
+
+{% block stylesheet %}
+        <style>
+
+
+                .grid > div:nth-child(3) {
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 9/14;
+
+            }
+
+                .grid > div:nth-child(4) {
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 13/20;
+            }
+
+                .grid > div:nth-child(5) {
+                /* background: pink; */
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 26/28;
+            }
+                .grid > div:nth-child(6) {
+                /* background: pink; */
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 29/30;
+            }
+                .grid > div:nth-child(8) {
+                /* background: pink; */
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 11/17;
+                grid-row: 35/38;
+            }
+
+
+        </style>
+{% endblock %}
+{% block content %}
+
+          <div class="content_1">
+                <h1>Library</h1>
+          </div>
+
+          <div class="content_2">
+              <ul id="fileList">
+                {% if files==None %}
+                    <li><strong>Empty</strong></li>
+                {% else %}
+                    {% for file in files %}
+                        <li><a href="/download/{{ file['name'] }}">{{ file['name'] }}</a> <button onclick="deleteFile('{{ file['name'] }}')">X</button></li>
+                    {% endfor %}
+                {% endif %}
+              </ul>
+          </div>
+
+
+          <div class="content_3">
+
+            <form action="/upload_file/{{ user1['User ID'] }}/{{ user2['User ID'] }}" method="POST" enctype="multipart/form-data">
+                <p><strong>Upload a file:</strong></p>
+                <input type="file" name="file">
+                <input type="submit" value="Upload">
+            </form>
+          </div>
+
+
+          <div class="content_4">
+          </div>
+
+          <div class="contact">
+            <hr>
+            <p style="text-decoration: underline;"><strong>Library Owners</strong></p>
+            <p>{{user1['First Name']  }} {{  user1['Last Name'] }}</p>
+            <p>{{user2['First Name']  }} {{  user2['Last Name'] }}</p>
+            <p><a href="mailto:zr578@nyu.edu">Report Issue</a></p>
+
+          </div>
+
+              <div class="alerts">
+              {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                messages %} {% for category, message in messages %}
+                  {% if category == 'error' %}
+                        <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                  {% else %}
+                        <div class="alert alert-success alter-dismissable fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+              {% endif %} {% endfor %} {% endif %} {% endwith %}
+          </div>
+
+    <script>
+        function deleteFile(filename) {
+            if (confirm('Are you sure you want to delete ' + filename + '?')) {
+                fetch('/delete_file', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ filename: filename }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function(response) {
+                    location.reload();
+                });
+            }
+        }
+    </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+{% endblock %}

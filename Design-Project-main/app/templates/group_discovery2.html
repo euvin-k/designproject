@@ -1,0 +1,159 @@
+{% extends "base2.html" %}
+
+{% block title %}Group Discovery{% endblock %}
+
+
+{% block stylesheet %}
+        <style>
+
+                {# content 1#}
+                .grid > div:nth-child(3) {
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 11/14;
+
+            }
+
+                .grid > div:nth-child(4) {
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 14/20;
+            }
+
+                .grid > div:nth-child(5) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 18/28;
+            }
+
+                {# content 4#}
+                .grid > div:nth-child(6) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 6;
+                grid-row: 29;
+            }
+
+                {# content 5#}
+                .grid > div:nth-child(7) {
+                /* background: pink; */
+                 {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 10;
+                grid-row: 29;
+            }
+                            {# content 6#}
+                .grid > div:nth-child(8) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 11/17;
+                grid-row: 30/31;
+            }
+
+
+        </style>
+{% endblock %}
+{% block content %}
+
+
+          <div class="content_1">
+            <form action="/search_group" method="POST">
+              <input type="text" placeholder="Search Group ID.." name="search" />
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+          </div>
+
+          <div class="content_2">
+                <h1>Discover New Groups~</h1>
+          </div>
+
+
+          <div class="content_3">
+                <table>
+
+
+                  <tr>
+                    <td><strong><h5>Group Name:</h5></strong></td>
+                    <td><div style="margin-left: 2em; text-align: center"><strong>{{ random_group_details['Name'] }}</strong></div></td>
+                  </tr>
+
+                  <tr>
+                    <td><strong><h5><div style="margin-top:1em;">Group ID:</div></h5></strong></td>
+                    <td><div style="margin-left: 2em; margin-top:1em;text-align: center"><strong>{{ random_group_details['Group ID'] }}</strong></div></td>
+                  </tr>
+
+
+                  <tr>
+                     <td><strong><div style="margin-top: 2em"><h5>Interests:</h5></div></strong></td>
+                  </tr>
+
+
+                  <tr>
+                      <td></td>
+                          <div class="interests-container">
+                          <td>
+                              {% if not random_group_interests %}
+                                <div style="margin-top: 1em; margin-left: 3em; text-align: center"><strong>Excited to meet new people!</strong></div>
+                            {% endif %}
+                          </td>
+
+                            {% for interest in random_group_interests %}
+                                <td>
+                                    <div style="margin-top: 1em; margin-left: 3em; text-align: center"><strong>{{ interest.name }}</strong></div>
+                                </td>
+                            {% endfor %}
+                        </div>
+
+                      </tr>
+
+                </table>
+          </div>
+
+
+          <div class="content_4">
+                <form action="/join_request" method="POST">
+                  <button
+                    style="background-color: rgb(37, 171, 55)"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    Match
+                  </button>
+                </form>
+                <br />
+          </div>
+
+          <div class="content_5">
+              <form action="/reject_group" method="POST">
+                  <button
+                    style="background-color: rgb(163, 18, 18)"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    Decline
+                  </button>
+                </form>
+          </div>
+
+         <div class="content_6">
+                              {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                    messages %} {% for category, message in messages %}
+                      {% if category == 'error' %}
+                            <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                      {% else %}
+                            <div class="alert alert-success alter-dismissable fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                  {% endif %} {% endfor %} {% endif %} {% endwith %}
+         </div>
+
+
+{% endblock %}

@@ -1,0 +1,150 @@
+{% extends "base2.html" %}
+
+{% block title %}Requests to Join Groups{% endblock %}
+
+
+{% block stylesheet %}
+        <style>
+
+                {# content 1#}
+                .grid > div:nth-child(3) {
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 10;
+                {#margin-top: ;    #}
+
+            }
+
+                .grid > div:nth-child(4) {
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 2/17;
+                grid-row: 13/20;
+            }
+
+                .grid > div:nth-child(5) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 2/17;
+                grid-row: 16/23;
+                text-space: 100px;
+            }
+
+                {# content 4#}
+                .grid > div:nth-child(6) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 3/8;
+                grid-row: 25;
+            }
+
+                {# content 5#}
+                .grid > div:nth-child(7) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 6;
+                grid-row: 30;
+            }
+                {# content 6#}
+                .grid > div:nth-child(8) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 10;
+                grid-row: 30;
+            }
+                .grid > div:nth-child(9) {
+                /* background: pink; */
+                /* background-color: rgb(255, 192, 203, .85); */
+                grid-column: 11/17;
+                grid-row: 30/31;
+            }
+
+
+        </style>
+{% endblock %}
+{% block content %}
+
+
+          <div class="content_1">
+                <h1>Accept or Decline Requests</h1>
+          </div>
+
+          <div class="content_2">
+            <h2>Request to join Group: {{ group[0] }}</h2>
+          </div>
+
+
+          <div class="content_3">
+                <h2>User Info</h2>
+                <table>
+                  {% for key in user_details.keys() %}
+
+                  <tr>
+                    <td>{{ key + ": " }}</td>
+                    <td>{{ user_details[key] }}</td>
+                  </tr>
+
+                  {% endfor %}
+                </table>
+
+          </div>
+
+
+          <div class="content_4">
+                <table>
+                  <th>User's Interests</th>
+
+                  {% for interest in user_interests %}
+
+                  <tr>
+                    <td>{{ interest.name }}</td>
+                  </tr>
+
+                  {% endfor %}
+                </table>
+          </div>
+
+          <div class="content_5">
+                <form action="/accept_req" method="POST">
+                  <button
+                    style="background-color: rgb(37, 171, 55)"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    Accept
+                  </button>
+                </form>
+          </div>
+          <div class="content_6">
+                <form action="/decline_req" method="POST">
+                  <button
+                    style="background-color: rgb(163, 18, 18)"
+                    type="submit"
+                    class="btn btn-primary"
+                  >
+                    Decline
+                  </button>
+                </form>
+          </div>
+
+             <div class="content_7">
+                              {% with messages = get_flashed_messages(with_categories=true) %} {% if
+                    messages %} {% for category, message in messages %}
+                      {% if category == 'error' %}
+                            <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                      {% else %}
+                            <div class="alert alert-success alter-dismissable fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                  {% endif %} {% endfor %} {% endif %} {% endwith %}
+         </div>
+
+
+{% endblock %}

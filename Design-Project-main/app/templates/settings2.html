@@ -1,0 +1,96 @@
+{% extends "base2.html" %}
+
+{% block title %}Settings{% endblock %}
+
+
+{% block stylesheet %}
+        <style>
+
+                {# content 1#}
+                .grid > div:nth-child(3) {
+                {#background-color: rgb(10,3,3, .55);#}
+                grid-column: 7/10;
+                grid-row: 12/12;
+
+            }
+
+                .grid > div:nth-child(4) {
+                {#background-color: rgb(255, 192, 203, .85);#}
+                grid-column: 1/17;
+                grid-row: 13/35;
+            }
+
+
+
+                .grid > div:nth-child(4) > tr {
+                padding: 10px;
+              }
+
+        </style>
+{% endblock %}
+{% block content %}
+
+
+          <div class="content_1" style="text-align: center">
+                    <button
+                      style="background-color: rgb(82,78,78)"
+                      type="submit"
+                      class="btn btn-primary"
+                    >
+                      <a class="interestLink" href="/view_interests" style="color: orangered">Update My Interests</a>
+                    </button>
+          </div>
+
+          <div class="content_2">
+                <form action="/settings" method="POST">
+                  <div class="card-body">
+                    <table class="table table-striped shadow-lg" style="border: 6px solid">
+                      {% for key in user_details.keys() %}
+                      <tr>
+
+                        <td class="table-secondary text-dark" >{{ key }}:</td>
+
+
+                        <td style="width: 40%">{{ user_details[key][1] }}</td>
+                        {% if key not in ['User ID'] %}
+
+
+                        <td>
+                          <div class="form-group">
+                            <input
+                              class="form-control"
+                              id="update_field"
+                              name="update_{{user_details[key][0]}}"
+                              placeholder="Type to update {{ key }}"
+                            />
+                          </div>
+                        </td>
+
+
+                        {% else %}
+                        <td></td>
+                        {% endif %}
+
+
+                      </tr>
+                      {% endfor %}
+                    </table>
+                  </div>
+                  <br />
+                  <div class="col-3" style="margin-left: 39%">
+                    <button
+                      style="background-color: rgb(82,78,78)"
+                      type="submit"
+                      class="btn btn-primary"
+                    >
+                        <div  style="color: orangered">Make Changes</div>
+                    </button>
+                  </div>
+                </form>
+          </div>
+
+
+
+
+
+{% endblock %}
